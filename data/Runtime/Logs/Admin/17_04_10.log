@@ -1,0 +1,372 @@
+[ 2017-04-10T17:47:28+08:00 ] 127.0.0.1 /admin
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.014001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.015001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:47:29+08:00 ] 127.0.0.1 /admin/public/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.013001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.014001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_config` [ RunTime:0.0020s ]
+SQL: SELECT `type`,`name`,`value` FROM `box_sys_config` WHERE `status` = 1  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020001s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021001s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:51:12+08:00 ] 127.0.0.1 /admin/public/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.013001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.014001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001001s ]
+SQL: SHOW COLUMNS FROM `box_member_account` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_member_account` WHERE `mobile` = '15800441096' AND `type` = 1 LIMIT 1   [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_group_access` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_auth_group_access` WHERE ( uid = 12 ) LIMIT 1   [ RunTime:0.0010s ]
+NOTIC: [8] Undefined index: nickname E:\Program Files\workspace\dynt_admin\src\apps\User\Logic\MemberLogic.class.php 第 32 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.033002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.033002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:51:14+08:00 ] 127.0.0.1 /admin/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.001000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.009000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.010000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_group_access` [ RunTime:0.0010s ]
+SQL: SELECT `rules` FROM box_sys_auth_group_access a INNER JOIN box_sys_auth_group g on a.group_id=g.id  WHERE ( a.uid='12' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_rule` [ RunTime:0.0020s ]
+SQL: SELECT `condition`,`name` FROM `box_sys_auth_rule` WHERE `id` IN ('2','573','606','656','657','88','431','432','433','434','435','436','437','438','439','440','441','442','443','446','447','449','450','451','453','454','456','459','460','462','463','464','465','467','468','469','470','471','472','473','474','475','476','477','478','479','480','481','482','483','484','487','488','489','490','491','492','493','494','495','496','497','498','499','500','501','502','503','504','505','506','507','508','509','510','511','512','513','514','516','517','518','519','520','521','522','523','524','525','526','527','528','529','530','531','532','533','534','535','536','537','538','539','540','541','542','543','544','545','546','547','548','549','550','551','552','553','554','555','556','557','558','559','560','561','562','563','564','565','566','567','568','569','570','571','572','574','575','576','577','578','579','580','581','582','583','584','585','586','587','588','589','590','591','592','593','594','595','596','597','598','599','600','601','602','603','604','605','607','608','609','610','611','612','613','614','615','616','617','618','619','620','621','622','623','624','625','626','627','628','629','630','631','632','633','634','635','636','637','638','639','640','641','642','643','644','645','646','647','648','649','650','651','652','653','654','655','658','659','660','661','662','663','664','665','666','667','668','669','734','740','386','387','390','391','392','393','407','409','415','416','466','515','732','733','735','736','737','738','739','741','742','743','744','745','746','747','748','749','750','751','752','753','754','755','756','757','758','759','760','761','762','763','764','765','766','767','809','831','1','3','5','26','28','29','30','31','32','33','34','35','36','37','38','39','40','41','61','62','63','64','65','66','80','81','82','83','84','86','87','94','95','100','102','103','207','212','213','317','318','320','781','782','783','806','807','810','811','812','813','814','815','816','817','818','819','820','821','822','823','824','825','826','827','828','829','830','832','833') AND `type` IN ('1','2') AND `status` = 1  [ RunTime:0.0040s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0010s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Index/index%' OR url like '%/Index/index%'   ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_rule` [ RunTime:0.0020s ]
+SQL: SELECT `condition`,`name` FROM `box_sys_auth_rule` WHERE `id` IN ('2','573','606','656','657','88','431','432','433','434','435','436','437','438','439','440','441','442','443','446','447','449','450','451','453','454','456','459','460','462','463','464','465','467','468','469','470','471','472','473','474','475','476','477','478','479','480','481','482','483','484','487','488','489','490','491','492','493','494','495','496','497','498','499','500','501','502','503','504','505','506','507','508','509','510','511','512','513','514','516','517','518','519','520','521','522','523','524','525','526','527','528','529','530','531','532','533','534','535','536','537','538','539','540','541','542','543','544','545','546','547','548','549','550','551','552','553','554','555','556','557','558','559','560','561','562','563','564','565','566','567','568','569','570','571','572','574','575','576','577','578','579','580','581','582','583','584','585','586','587','588','589','590','591','592','593','594','595','596','597','598','599','600','601','602','603','604','605','607','608','609','610','611','612','613','614','615','616','617','618','619','620','621','622','623','624','625','626','627','628','629','630','631','632','633','634','635','636','637','638','639','640','641','642','643','644','645','646','647','648','649','650','651','652','653','654','655','658','659','660','661','662','663','664','665','666','667','668','669','734','740','386','387','390','391','392','393','407','409','415','416','466','515','732','733','735','736','737','738','739','741','742','743','744','745','746','747','748','749','750','751','752','753','754','755','756','757','758','759','760','761','762','763','764','765','766','767','809','831','1','3','5','26','28','29','30','31','32','33','34','35','36','37','38','39','40','41','61','62','63','64','65','66','80','81','82','83','84','86','87','94','95','100','102','103','207','212','213','317','318','320','781','782','783','806','807','810','811','812','813','814','815','816','817','818','819','820','821','822','823','824','825','826','827','828','829','830','832','833') AND `type` = 2 AND `status` = 1  [ RunTime:0.0030s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 1 )  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 1 AND `hide` = 0  [ RunTime:0.0020s ]
+NOTIC: [2] Invalid argument supplied for foreach() E:\Program Files\workspace\dynt_admin\src\apps\Admin\Controller\AdminController.class.php 第 331 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 94 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 169 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 173 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 190 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 313 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.174010s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.174010s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001001s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001001s ]
+
+[ 2017-04-10T17:52:38+08:00 ] 127.0.0.1 /admin/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Index/index%' OR url like '%/Index/index%'   ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 1 )  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 1 AND `hide` = 0  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() E:\Program Files\workspace\dynt_admin\src\apps\Admin\Controller\AdminController.class.php 第 331 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 94 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 169 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 173 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 190 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 313 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.043003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.043003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:52:55+08:00 ] 127.0.0.1 /admin/index/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Index/index%' OR url like '%/Index/index%'   ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 1 )  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 1 AND `hide` = 0  [ RunTime:0.0010s ]
+NOTIC: [2] Invalid argument supplied for foreach() E:\Program Files\workspace\dynt_admin\src\apps\Admin\Controller\AdminController.class.php 第 331 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 94 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 169 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 173 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 190 行.
+NOTIC: [8] Undefined variable: count E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\fccc6ad6d61752485985b555f95c9ac5.php 第 313 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.038002s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.039002s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:53:01+08:00 ] 127.0.0.1 /admin/config/group.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.004000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.007000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Config/group%' OR url like '%/Config/group%'   ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_group_access` [ RunTime:0.0020s ]
+SQL: SELECT `rules` FROM box_sys_auth_group_access a INNER JOIN box_sys_auth_group g on a.group_id=g.id  WHERE ( a.uid='12' and g.status='1' )  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_auth_rule` [ RunTime:0.0030s ]
+SQL: SELECT `condition`,`name` FROM `box_sys_auth_rule` WHERE `id` IN ('2','573','606','656','657','88','431','432','433','434','435','436','437','438','439','440','441','442','443','446','447','449','450','451','453','454','456','459','460','462','463','464','465','467','468','469','470','471','472','473','474','475','476','477','478','479','480','481','482','483','484','487','488','489','490','491','492','493','494','495','496','497','498','499','500','501','502','503','504','505','506','507','508','509','510','511','512','513','514','516','517','518','519','520','521','522','523','524','525','526','527','528','529','530','531','532','533','534','535','536','537','538','539','540','541','542','543','544','545','546','547','548','549','550','551','552','553','554','555','556','557','558','559','560','561','562','563','564','565','566','567','568','569','570','571','572','574','575','576','577','578','579','580','581','582','583','584','585','586','587','588','589','590','591','592','593','594','595','596','597','598','599','600','601','602','603','604','605','607','608','609','610','611','612','613','614','615','616','617','618','619','620','621','622','623','624','625','626','627','628','629','630','631','632','633','634','635','636','637','638','639','640','641','642','643','644','645','646','647','648','649','650','651','652','653','654','655','658','659','660','661','662','663','664','665','666','667','668','669','734','740','386','387','390','391','392','393','407','409','415','416','466','515','732','733','735','736','737','738','739','741','742','743','744','745','746','747','748','749','750','751','752','753','754','755','756','757','758','759','760','761','762','763','764','765','766','767','809','831','1','3','5','26','28','29','30','31','32','33','34','35','36','37','38','39','40','41','61','62','63','64','65','66','80','81','82','83','84','86','87','94','95','100','102','103','207','212','213','317','318','320','781','782','783','806','807','810','811','812','813','814','815','816','817','818','819','820','821','822','823','824','825','826','827','828','829','830','832','833') AND `type` = 1 AND `status` = 1  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_config` [ RunTime:0.0020s ]
+SQL: SELECT `id`,`name`,`title`,`extra`,`value`,`remark`,`type` FROM `box_sys_config` WHERE `status` = 1 AND `group` = 1 ORDER BY sort  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\7b4f66b92945784f05f5667932b7d100.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\7b4f66b92945784f05f5667932b7d100.php 第 94 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.141008s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.142008s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-04-10T17:53:03+08:00 ] 127.0.0.1 /admin/menu/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0010s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Menu/index%' OR url like '%/Menu/index%'   ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=82 ) LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`title` FROM `box_sys_menu`  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`title`,`pid`,`sort`,`url`,`hide`,`tip`,`group`,`is_dev`,`icon`,`module` FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc,id asc  [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\abc405c92bcfd70eb452f2da6d210289.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\abc405c92bcfd70eb452f2da6d210289.php 第 94 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.092005s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.092005s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:53:07+08:00 ] 127.0.0.1 /admin/menu/del/id/205.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.004001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Menu/del%' OR url like '%/Menu/del%'   ) LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=153 ) LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=82 ) LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0020s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0020s ]
+SQL: DELETE FROM `box_sys_menu` WHERE `id` IN ('205') [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_action` [ RunTime:0.0140s ]
+SQL: SELECT * FROM `box_action` WHERE `name` = 'update_menu' LIMIT 1   [ RunTime:0.0010s ]
+
+[ 2017-04-10T17:53:11+08:00 ] 127.0.0.1 /admin/menu/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.003000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004000s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Menu/index%' OR url like '%/Menu/index%'   ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=82 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`title` FROM `box_sys_menu`  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`title`,`pid`,`sort`,`url`,`hide`,`tip`,`group`,`is_dev`,`icon`,`module` FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc,id asc  [ RunTime:0.0020s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\abc405c92bcfd70eb452f2da6d210289.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\abc405c92bcfd70eb452f2da6d210289.php 第 94 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.049003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.049003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:53:16+08:00 ] 127.0.0.1 /admin/config/index.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.013001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.013001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0070s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Config/index%' OR url like '%/Config/index%'   ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=76 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SHOW COLUMNS FROM `box_sys_config` [ RunTime:0.0020s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `box_sys_config` WHERE `status` = 1 AND `title` <> '' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`type`,`title`,`group`,`extra`,`remark`,`create_time`,`update_time`,`status`,`value`,`sort` FROM `box_sys_config` WHERE `status` = 1 AND `title` <> '' ORDER BY sort,id LIMIT 0,10   [ RunTime:0.0030s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\e27f616fa649222e6d821ed834d9f3a7.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\e27f616fa649222e6d821ed834d9f3a7.php 第 94 行.
+NOTIC: [8] Undefined offset: 6 E:\Program Files\workspace\dynt_admin\src\apps\Admin\Common\function.php 第 155 行.
+NOTIC: [8] Undefined offset: 5 E:\Program Files\workspace\dynt_admin\src\apps\Admin\Common\function.php 第 155 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.079005s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.079005s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-04-10T17:55:40+08:00 ] 127.0.0.1 /admin/config/index/page/4.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: Run Common\Behavior\InitHookBehavior [ RunTime:0.013001s ]
+INFO: [ app_init ] --END-- [ RunTime:0.014001s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+SQL: SHOW COLUMNS FROM `box_sys_menu` [ RunTime:0.0020s ]
+SQL: SELECT * FROM `box_sys_menu` WHERE `pid` = 0 ORDER BY sort asc  [ RunTime:0.0000s ]
+SQL: SELECT `id` FROM `box_sys_menu` WHERE ( url like 'Config/index%' OR url like '%/Config/index%'   ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=76 ) LIMIT 1   [ RunTime:0.0000s ]
+SQL: SELECT `id`,`pid`,`title` FROM `box_sys_menu` WHERE ( id=74 ) LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT DISTINCT  `group` FROM `box_sys_menu` WHERE ( pid = 74 )  [ RunTime:0.0000s ]
+SQL: SELECT `id`,`url` FROM `box_sys_menu` WHERE `pid` = 74 AND `hide` = 0  [ RunTime:0.0020s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '权限管理' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '系统设置' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SELECT `id`,`pid`,`title`,`url`,`tip` FROM `box_sys_menu` WHERE `group` = '数据备份' AND `url` IN ('AuthManager/index','Config/group','Config/index','Menu/index','Database/index?type=export','Database/index?type=import','Config/website') AND `pid` = 74 AND `hide` = 0 ORDER BY sort asc  [ RunTime:0.0010s ]
+SQL: SHOW COLUMNS FROM `box_sys_config` [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `box_sys_config` WHERE `status` = 1 AND `title` <> '' LIMIT 1   [ RunTime:0.0010s ]
+SQL: SELECT `id`,`name`,`type`,`title`,`group`,`extra`,`remark`,`create_time`,`update_time`,`status`,`value`,`sort` FROM `box_sys_config` WHERE `status` = 1 AND `title` <> '' ORDER BY sort,id LIMIT 30,10   [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.001000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\e27f616fa649222e6d821ed834d9f3a7.php 第 57 行.
+NOTIC: [8] Undefined variable: viewType E:\Program Files\workspace\dynt_admin\data\Runtime\Cache\Admin\e27f616fa649222e6d821ed834d9f3a7.php 第 94 行.
+NOTIC: [8] Undefined offset: 5 E:\Program Files\workspace\dynt_admin\src\apps\Admin\Common\function.php 第 155 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.055003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.055003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001001s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001001s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

@@ -1,0 +1,1 @@
+$("#cnzz_stat_icon_1261599473").find("a").html('');

@@ -1,0 +1,185 @@
+<extend name="Public/base"/>
+<block name="body">
+    <script type="text/javascript" charset="utf-8" src="/Public/Admin/Static/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="/Public/Admin/Static/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+    <div class="main-title">
+        <h2>招聘详情</h2>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+    <br/>
+    <div>
+            <table class="table table-bordered table-striped ">
+                <tbody>
+                    <tr>
+                        <th style='width:150px;'>
+                            ID
+                        </th>
+                        <td >
+                            {$recruit.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style='width:150px;'>
+                            发布人昵称
+                        </th>
+                        <td >
+                            <a href="{:U('User/user_info?uid='.$recruit['uid'])}" >{$recruit.nickname}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            发布人账号
+                        </th>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$recruit['uid'])}" >{$recruit.username}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            职位
+                        </th>
+                        <td>
+                            {$recruit.position_name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            公司
+                        </th>
+                        <td>
+                            {$recruit.company_name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            联系方式
+                        </th>
+                        <td>
+                            {$recruit.mobile}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            薪资
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_SALARY' , $recruit['salary']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            地点
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_ADDRESS' , $recruit['address']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            学历
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_EDUCATION' , $recruit['education']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            经验
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_EXPERIENCE' , $recruit['experience']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            年龄
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_AGE' , $recruit['age']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            性别
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_GENDER' , $recruit['gender']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            职责
+                        </th>
+                        <td>
+                            {$recruit.duty}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            发布时间
+                        </th>
+                        <td>
+                            {$recruit.dateline|time_format}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+    </div>
+    
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+        
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+        
+    </script>
+</block>

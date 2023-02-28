@@ -1,0 +1,219 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>添加任务</h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="with-padding">
+            <div class="form-item">
+                <label class="item-label">任务标题</label>
+                <div class="controls">
+                    <input type="text" class="text input-large form-input-width form-control" name="title" value="{$info.title|default=''}">
+                </div>
+            </div>
+
+            <div class="form-item">
+                <label class="item-label">执行时间</label>
+                <div class="controls">
+                    <input type="text" class="text form-input-width form-datetime form-control" name="runtime" value="{$info.runtime}">
+                    <font color="red">(注：活动专题必须填写执行时间，其它的可以不填写)</font>
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">执行次数</label>
+                <div class="controls">
+                    <input type="radio" name="num" value="1" <if condition="$info.num eq 1">checked</if> />1次
+                    <input type="radio" name="num" value="2" <if condition="$info.num eq 2">checked</if> />每天一次
+                    <input type="radio" name="num" value="3" <if condition="$info.num eq 3">checked</if> />不限，每次都执行
+                    <br /><font color="red">(注：针对某个活动或专题的推送，这一般为一次性的，这处需选择1次，晚九点，福利社这类的是每天都需要的，那这里就可以选择每天，show,功效测试的定时发布这是每次执行要需要的)</font>
+                </div>
+            </div> 
+            
+            <div class="form-item">
+                <label class="item-label">所属栏目</label>
+                <div class="controls">
+                    <select name="objtype" id="objtype" class="form-select-size form-control">
+                    	<option value="0">请选择栏目</option>
+                        <option value="2" <if condition="$info.objtype eq '2'">selected</if>>晚九点</option>
+                        <option value="4" <if condition="$info.objtype eq '4'">selected</if>>福利社</option>
+                        <option value="1" <if condition="$info.objtype eq '1'">selected</if>>活动</option>
+                        <option value="3" <if condition="$info.objtype eq '3'">selected</if>>专题</option>
+                        <option value="5" <if condition="$info.objtype eq '5'">selected</if>>功效测试</option>
+                        <option value="6" <if condition="$info.objtype eq '6'">selected</if>>Show</option>
+                    </select>(选择功效测试和Show时不需要选择ID，<font color="red">注：以下的ID不选择时默认为当天的活动，晚九点和福利社，一般来说是不用选择</font>)
+                </div>
+            </div>
+            <div class="form-item">
+                <label class="item-label">选择ID</label>
+                <div class="controls">
+                    <input type="text" class="text form-input-width form-control" style="float:left;" name="post_id" id="post_id" value="{$info.post_id}">
+                    <input type="hidden" name="post_title" id="post_title" value="" /> 
+                    <a style="cursor: pointer;float:left;" class="addActivity"><img style="border:0px; width: 25px; height: 25px; margin-top: 0px;" src="/Public/static/integral/images/checkPost.jpg"></a>
+                </div>
+            </div>
+            <div class="form-item" style="clear:both">
+                <label class="item-label">推送内容</label>
+                <div class="controls">
+                    <textarea name="content" cols="50" rows="8">{$info.content}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-item with-padding">
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+    
+    <div class="activity_div" style="background-color: #FFFFFF;">
+        <!-- 分类选择列表 -->
+        <span>
+            <input type="text" name="activityInfo" id="activityInfo" placeholder="标题"
+                    style="margin: 0px 0px 0px 0px;border: 1px solid #BAD6EC; height: 26px;" 
+                    value="" />&nbsp;
+            <button class="btn btn-info" type="button" onclick="findActivityInfo()">
+                    <i class="icon-ok bigger-110"></i>
+                    搜索
+            </button>
+        </span>
+        <br/>
+        <div class="activityInfo_div">
+        </div>
+    </div>
+    <style>
+		.activity_div{
+		    list-style: none;
+			font-size:12px; 
+			display:none;
+			background-color:#FFFFFF;
+		    width:300px; 
+		    height:620px;
+			overflow:auto;
+			position:absolute;
+			top:50px;
+			right:20px;
+		    cursor:pointer;	 
+		}
+		.activity_div li{ list-style:none; margin-top:15px;}
+    </style>
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+</block>
+
+<block name="script">
+    <script>
+    
+    var loading = "";
+	loading += "<div style='text-align: center; padding-top: 150px;'>";
+	loading += "<img src='/Public/static/integral/images/loading.gif' style='width: 60px; height: 60px;'>";
+	loading += "</div>";
+	
+            $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            
+            $(document).ready(function(){
+                var postCount = 0;
+                 //显示隐藏产品div
+                $(".addActivity").click(function(){
+                    var pt = document.getElementById("objtype").value;
+                    if(pt == 0){
+                        alert("请选择消息板块!");
+                    }else{
+                        postCount++;
+                        if(postCount % 2 != 0){
+                            var activityInfo = document.getElementById("activityInfo").value;
+
+                            $.getJSON("/admin/integral/findslactivityinfo.html",{"activityInfo":activityInfo,"type":pt},function(json){
+                                initPagination(json);
+                            });
+                            $(".activityInfo_div").empty().append(loading);
+                        }
+                       $(".activity_div").slideToggle();
+                    }
+                });
+            })
+            
+            function initPagination(json){
+                var str =""; 
+                var data = json.list;
+//                alert(data);
+                if(data != null && data.length != 0){
+                    str+= "<table class='gridView' style='BORDER-COLLAPSE: collapse' border=1>";
+                    str+="<tbody>";
+                    str+="<tr style='background-color: #F2F2F2;font-size: 18px; height: 55px;'><th style='text-align: center;'>序号</th>";
+                    str+="<th style='text-align: center;'>标题</th></tr>";
+                    for(var i = 0; i < data.length; i++){
+                        str += "<tr style='font-size: 14px;color: #000000; height: 48px;'><td style='text-align: center;'>" + data[i].id + "</td>";
+                        str += "<td style='width:240px;text-align: center;'><a onclick='checkActivityInfo(this)' id='"+data[i].id+"' name='"+data[i].title+"' class='postInfo' style='padding-left: 10px; color: blue;'>" + data[i].title + "</a></td></tr>";
+                    }
+                    str += "</tbody></table><br>";
+//                    str += "<label "+json.pg+"</label>";
+                    str += "【<label id='currentPage' >"+json.cp+"</label>/<label id='totalPages' >"+json.tp+"</label>】";
+                    str += "<a style='padding-left: 100px;' onclick='previouPage()'>上一页</a><a style='margin-left: 30px;' onclick='nextPage()'>下一页</a>";
+                }else{
+                    str += "<label style='margin-left:70px;margin-top:300px;'>没有找到相关信息！</label>";
+                }
+                $(".activityInfo_div").empty().append(str);
+    	 	}
+            
+            function findActivityInfo(){
+                var activityInfo = document.getElementById("activityInfo").value;
+                var pt = document.getElementById("objtype").value;
+                $(".activityInfo_div").empty().append(loading);
+                $.getJSON("/admin/integral/findslactivityinfo.html",{"activityInfo":activityInfo,"type":pt},function(json){
+                    initPagination(json);
+                });
+    		}
+            
+          //上一页
+        	function previouPage(){
+                    //$(".post_div").empty().append(loading);
+                    var cp = document.getElementById("currentPage").innerHTML;
+
+                    if(cp == "1"){
+                            alert("已经是首页!");
+                    }else{
+                        $(".activityInfo_div").empty().append(loading);
+                        var activityInfo = document.getElementById("activityInfo").value;
+                        var pt = document.getElementById("objtype").value;
+                        $.getJSON("/admin/integral/findslactivityinfo.html",{"activityInfo":activityInfo,"type":pt,"currentPage":cp,"pageMethod":"previous"},function(json){
+                            initPagination(json);
+                        });
+                    }
+        	}
+        	
+        	//下一页
+        	function nextPage(){
+                    //$(".post_div").empty().append(loading);
+                    var cp = document.getElementById("currentPage").innerHTML;
+                    var tp = document.getElementById("totalPages").innerHTML;
+                    if(cp == tp){
+                            alert("已经是最后一页!");
+                    }else{
+                        $(".activityInfo_div").empty().append(loading);
+                        var activityInfo = document.getElementById("activityInfo").value;
+                        var pt = document.getElementById("objtype").value;
+                        var pm = "next";
+                        $.getJSON("/admin/integral/findslactivityinfo.html",{"activityInfo":activityInfo,"type":pt,"currentPage":cp,"pageMethod":pm},function(json){
+                            initPagination(json);
+                        });
+                    }
+        	}
+        	
+        	function checkActivityInfo(t){
+                var cName = t.name;
+                var cId = t.id;
+                //var p = cInfo.split("_");
+    	    	$("#post_id").val(cId);
+    	    	$("#post_title").val(cName);
+
+    		}
+            
+            highlight_subnav("{:U('Cron/index')}");
+        </script>
+</block>

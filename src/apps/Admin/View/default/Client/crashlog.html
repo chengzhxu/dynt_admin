@@ -1,0 +1,197 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>错误日志列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+        </div>
+        <script>
+        </script>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: 0px;">
+            <div class="input-group">
+                <input type="text" name="errorinfo" class="search-input form-control" value="{:I('errorinfo')}" style="width:250px; margin-left: -100px;"  
+                       placeholder="错误信息">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('crashlog')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">ID</th>
+                <th class="">客户端类型</th>
+                <th class="">SDK</th>
+                <th class="">系统版本</th>
+                <th class="">错误信息</th>
+                <th class="">手机型号</th>
+                <th class="">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>
+                            <eq name="vo.client" value="0">
+                                IOS
+                                <else/>
+                                Android
+                            </eq>
+                        </td>
+                        <td>
+                            {$vo.version_sdk}
+                        </td>
+                        <td>{$vo.release}</td>
+                        <td>{$vo.error_string}</td>
+                        <td>{$vo.mobiletype}</td>
+
+                        <td>
+                            {$vo.dateline}
+                        </td>
+
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+    <div class="toadmin" id="modal_box"  style="display:none; top:130px; overflow:auto;position:absolute; right: 430px;">
+        <div class="modal-dialog" style="width: 300px; height: 230px;">
+            <div class="modal-content" style="width: 300px; height: 230px;">
+                <div class="modal-header">
+                    <button type="button" class="close" onclick="hiddenAdmin()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body" id="adminType" style="width:300px;margin: 30px auto">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button" role="button" aria-disabled="false" onclick="changeAdminGroup()" data-dismiss="modal">
+                        <span class="ui-button-text">
+                            <i class="icon-ok bigger-110"></i>
+                            确 定
+                        </span>
+                    </button>
+                    <button class="btn btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type="button" role="button" aria-disabled="false" onclick="hiddenAdmin()">
+                        <span class="ui-button-text">
+                            <i class="icon-remove bigger-110"></i>
+                            取 消
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/admin')}");
+        
+        
+        
+        var uid = 0;
+        
+        function changeAdminGroupClick(id){
+            uid = id;
+            //alert("sss");
+            $.getJSON("{:U('getAdminType')}",{},function(json){
+                initPagination(json);
+            });
+            $(".toadmin").slideToggle();
+        }
+        
+        function initPagination(json){
+            var str =""; 
+            var data = json.list;
+            if(data.length != 0){
+                var str = "";
+                str += "管理员分组： <select name='type' id='pt' style='width:150px;height:28px;' onchange='atChange(this)'>";
+                for(var i = 0; i < data.length; i++){
+    //                管理员类型： <select name="type" id="pt" style="width:150px;height:28px;" onchange="ptChange()">
+    //                        <option value="1">VIP</option>
+    //                        <option value="2">普通管理员</option>
+    //                    </select>
+                    str += "<option value='"+ data[i].id +"'>"+ data[i].title +"</option>";
+                    //str += "<td style='width:240px;text-align: center;'><a onclick='checkActivityInfo(this)' id='"+data[i].id+"' name='"+data[i].title+"' class='postInfo' style='padding-left: 10px; color: blue;'>" + data[i].title + "</a></td></tr>";
+                }
+                str += "</select>";
+                str += "<input type='hidden' name='at' id='at' value='"+data[0].id+"'/>";
+                $("#adminType").empty().append(str);
+            }
+        }
+        
+        function atChange(t){
+            document.getElementById("at").value = t.value;
+        }
+        
+        function changeAdminGroup(){
+            //alert(uid);
+            var gt = document.getElementById("at").value;
+            var type = "A";
+            $.getJSON("{:U('changeAdminGroup')}",{uid:uid,groupid:gt},function(json){
+                if(json.status == 1){
+                    $(".toadmin").slideToggle();
+                    document.location.reload();
+                }else{
+                    alert("操作失败，请联系管理员！");
+                } 
+            });
+        }
+        
+        function removeAdminOfUser(uid){
+            var type = "D";
+            $.getJSON("{:U('changeUserToAdmin')}",{uid:uid,type:type},function(json){
+                if(json.status == 1){
+                    document.location.reload();
+                }else{
+                    alert("操作失败，请联系管理员！");
+                } 
+            });
+        }
+        
+        function hiddenAdmin(){
+            $(".toadmin").slideToggle();
+        }
+    </script>
+</block>

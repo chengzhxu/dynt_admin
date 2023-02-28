@@ -1,0 +1,243 @@
+.html{  -webkit-text-size-adjust:none;outline:0;zoom:1;  }
+p,ul,li{margin:0;padding:0;}a{text-decoration: none;color: #fff;}.clear_both{  clear: both;}
+p{ -webkit-margin-before: 0px;  -webkit-margin-after: 0px;  -webkit-margin-start: 0px;  -webkit-margin-end: 0px; word-break:break-all;}
+ul,li{list-style: none;}  img{border:0;}a:hover{-webkit-tap-highlight-color: transparent;}
+input,textarea,button{ font-family:"SimHei",Microsoft YaHei,Arial,Helvetica,sans-serif;  -webkit-appearance: none;  margin:0;  padding:0;}
+input::-webkit-input-placeholder {color:#666;  }
+input:-moz-placeholder {  color:#666;  }
+input::-moz-placeholder {  color:#666;  }
+input:-ms-input-placeholder { color:#666;  }
+body{
+    padding:0;margin:0;width:100%;height:100%;color:#666666;background:#ff98d7;
+    font-family:"SimHei",Microsoft YaHei,Arial,Helvetica,sans-serif;
+}
+.line_bg{
+    width:100%;
+    height:auto;
+    overflow: hidden;
+    position: relative;
+    background: url("../img/line_bg.png") 50% 50% no-repeat;
+}
+.index_pic{
+    width:100%;
+    height:100%;
+}
+.index_pic img{
+    top:0;
+    left:0;
+    right:0;
+    margin:auto;
+    position: absolute;
+}
+.logo_pic{
+    top:35px;
+    left:75px;
+    position: absolute;
+}
+.apply_for{
+    left:0;
+    right:0;
+    bottom:30px;
+    margin: auto;
+    position: absolute;
+}
+.apply_for p{
+    width:500px;
+    height:90px;
+    margin:0 auto;
+    color: #FFFFFF;
+    font-size: 36px;
+    line-height: 90px;
+    text-align: center;
+    background: #fe69b2;
+    border-radius: 50px;
+}
+.a_href{
+    top:0;
+    left:0;
+    right:0;
+    width:500px;
+    height:100%;
+    z-index:333;
+    margin: auto;
+    position: absolute;
+}
+
+/*小调查*/
+.flower_bg,.flower_bg2{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+    position: relative;
+    background: url("../img/fbg_2.png") 50% 50% no-repeat;
+}
+.section_main{
+    width:92%;
+    height:1450px;
+    overflow: hidden;
+    border-radius:10px;
+    background: #FFFFFF;
+    margin:180px auto 80px;
+    box-shadow: 0 5px 13px #b35f81;
+}
+.survey_title{
+    width:499px;
+    height:101px;
+    margin:40px auto 20px;
+}
+.survey_txt,
+.signUp_txt{
+    width:91%;
+    height:auto;
+    margin:0 auto;
+    font-size: 24px;
+    overflow: hidden;
+}
+.survey_txt div{
+    float: left;
+}
+.survey_ques{
+    font-size:28px;
+    color: #333333;
+    line-height:50px;
+    margin-top: 20px;
+}
+.ques_options{
+    width:100%;
+    margin:20px auto;
+    line-height: 50px;
+    text-align: center;
+}
+.ques_options span{
+    width:25%;
+    float: right;
+    display: inline-block;
+}
+.survey_question1{
+    width:100%;
+    text-align: center;
+}
+.survey_question1 ul li{
+    width:25%;
+    float: left;
+    color: #cccccc;
+    font-size:70px;
+    line-height:60px;
+}
+.survey_question1 ul li.tou{
+    color: #666666;
+    text-align: left;
+    font-size:24px;
+    line-height: 65px;
+}
+.ques2_desc{
+    margin:10px auto;
+    line-height:45px;
+}
+.ques2_options{
+    width:100%;
+}
+.ques2_options ul li{
+    width:30%;
+    float: left;
+}
+.ques2_options span{
+    float: left;
+    color: #666;
+    display: block;
+    font-size:24px;
+    line-height: 65px;
+}
+.ques2_options span.option2_icon{
+    color: #ccc;
+    font-size:70px;
+    line-height: 60px;
+    padding-right:20px;
+}
+.commit_for p{
+    width:500px;
+    height:90px;
+    color: #FFFFFF;
+    font-size: 36px;
+    margin:30px auto;
+    line-height: 90px;
+    text-align: center;
+    background: #fe69b2;
+    border-radius: 50px;
+}
+.chose{
+    color: #fe69b2!important;
+}
+
+/*注册*/
+.flower_bg2{
+    background: url("../img/fbg_3.png") 50% 50% no-repeat;
+}
+.section_main2{
+    width:92%;
+    height:920px;
+    overflow: hidden;
+    border-radius:10px;
+    background: #FFFFFF;
+    margin:290px auto 80px;
+    box-shadow: 0 5px 13px #b35f81;
+}
+.sign_pic{
+    left:0;
+    right:0;
+    top:80px;
+    margin: auto;
+    position: absolute;
+}
+.signUp_title{
+    width:180px;
+    color: #fe69b2;
+    font-size:36px;
+    font-weight:600;
+    text-align: center;
+    margin:200px auto 0;
+}
+.put_tip{
+    font-size:24px;
+    color: #fe69b2;
+    line-height: 40px;
+}
+.signUp_txt ul li{
+    width:100%;
+    float: left;
+    margin:20px auto;
+}
+
+.sign_put{
+    border:0;
+    margin:0;
+    outline:0;
+    height:90px;
+    color: #666;
+    padding: 0;
+    font-size:28px;
+    line-height:90px;
+    background: #f2f2f2;
+    border-radius: 10px;
+}
+
+#phone_number{
+    width:600px;
+    padding:0 0 0 25px ;
+}
+#code_word{
+    width:380px;
+    float: left;
+    padding:0 0 0 25px ;
+}
+#code_get{
+    width:180px;
+    float: right;
+    color: #FFFFFF;
+    text-align: center;
+    background: #fe69b2;
+}
+#code{
+    width:600px;
+    padding:0 0 0 25px ;
+}

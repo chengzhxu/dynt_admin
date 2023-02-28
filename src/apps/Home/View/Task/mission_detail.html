@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务详情</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_index.css"/>
+    <link rel="stylesheet" href="__STATIC__/master/css/join_mission.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="fbg">
+            <img class="fbg_top" src="__STATIC__/master/img/fbg_top.png"/>
+            <img class="fbg_bottom" src="__STATIC__/master/img/fbg_bottom.png"/>
+            <div class="box_content78 start_content" style="min-height:1100px;">
+                <div class="start_mission">
+                    <p class="start_mission_img"><img src="{$goodinfo.thumbs}"/></p>
+                    <p class="start_mission_name">{$goodinfo.name}</p>
+                </div>
+                <div class="start_mission_brief">
+                    <p>{$goodinfo.description}</p>
+                </div>
+                <div class="start_mission_list">
+                    <ul>
+						<volist name="taskinfo" id="vo" key="k">
+                        <li>
+                            <div class="mission_num">
+                                <div class="mission_num_left" obj_id="{$vo.id}" key="{$k}" gid="{$vo.gid}">
+                                    <p class="num_left_title">{$vo.title}</p>
+                                    <p class="num_left_ju">{$vo.name}</p>
+                                </div>
+                                <div class="mission_num_right">
+									<if condition="$vo['status'] eq 0">
+										<div class="num_sta_left">
+											<p class="sta1"><img src="__STATIC__/master/img/unlock.png"/></p>
+											<p class="sta2">未完成</p>
+										</div>
+									<elseif condition="$vo['status'] eq 1"/>
+										<div class="num_sta_left">
+											<p class="sta1"><img src="__STATIC__/master/img/under_review.png"/></p>
+											<p class="sta2">审核中</p>
+										</div>
+									<elseif condition="$vo['status'] eq 2"/>
+										<div class="num_sta_left">
+											<p class="sta1"><img src="__STATIC__/master/img/got_done.png"/></p>
+											<p class="sta2">完成</p>
+										</div>
+									<elseif condition="$vo['status'] eq 3"/>
+										<div class="num_sta_left">
+											<p class="sta1"><img src="__STATIC__/master/img/failed.png"/></p>
+											<p class="sta2">失败</p>
+										</div>
+									</if>
+                                    <div class="num_sta_right">
+                                        <img src="__STATIC__/master/img/arrow_begin.png"/>
+                                    </div>
+                                    <a onclick="jumpurl({$vo.id},{$k},{$vo.gid})" class="mission_to"></a>
+                                </div>
+                            </div>
+                        </li>
+						</volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(".mission_num_left").click(function (){
+	var obj_id = $(this).attr('obj_id');
+	var key    = $(this).attr('key');
+	var gid    = $(this).attr('gid');
+	jumpurl(obj_id,key,gid);
+});
+function jumpurl(obj_id,key,gid){
+	var url = "{WEB_URL}Task/taskdetails?tid="+obj_id+'&uid='+{:I('uid')}+'&index='+key+'&gid='+gid+'&box_id='+{:I('box_id')};
+	window.location.href = url;
+}
+</script>
+</body>
+</html>

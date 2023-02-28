@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务完成中</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_index.css"/>
+    <link rel="stylesheet" href="__STATIC__/master/css/join_mission.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+	<!-- 上传图片 -->
+	<script type='text/javascript' src='__JS__/js/jquery-2.0.3.min.js'></script>
+	<script type='text/javascript' src='__STATIC__/master/js/LocalResizeIMG.js'></script>
+	<script type='text/javascript' src='__STATIC__/master/js/patch/mobileBUGFix.mini.js'></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="fbg" style="min-height:1100px;">
+            <img class="fbg_top" src="__STATIC__/master/img/fbg_top.png"/>
+            <img class="fbg_bottom" src="__STATIC__/master/img/fbg_bottom.png"/>
+            <div class="box_content78 ing_content">
+                <div class="start_mission">
+                    <p class="start_mission_img"><img src="{$goodinfo.thumbs}"/></p>
+                    <p class="start_mission_name">{$goodinfo.name}</p>
+                </div>
+                <div class="start_mission_brief">
+                    <p>{$goodinfo.description}</p>
+                </div>
+                <div class="start_mission_list">
+                    <ul>
+                        <li>
+                            <div class="mission_num">
+                                <div class="mission_num_left">
+                                    <p class="num_left_title">{$taskinfo.title}</p>
+                                    <p class="num_left_ju">{$taskinfo.name}</p>
+                                </div>
+                                <div class="mission_num_right">
+									<div class="num_sta_left">
+										<if condition="$taskinfo['status'] eq 0">
+										<p class="sta1"><img src="__STATIC__/master/img/unlock.png"/></p>
+										<p class="sta2">未完成</p>
+										<elseif condition="$taskinfo['status'] eq 1"/>
+										<p class="sta1"><img src="__STATIC__/master/img/under_review.png"/></p>
+										<p class="sta2">审核中</p>
+										<elseif condition="$taskinfo['status'] eq 2"/>
+										<p class="sta1"><img src="__STATIC__/master/img/got_done.png"/></p>
+										<p class="sta2">完成</p>
+										<elseif condition="$taskinfo['status'] eq 3"/>
+										<p class="sta1"><img src="__STATIC__/master/img/failed.png"/></p>
+										<p class="sta2">失败</p>
+										</if>
+                                    </div>
+                                    <div class="num_sta_right">
+                                        <img src="__STATIC__/master/img/arrow_up.png"/>
+                                    </div>
+                                    <a class="mission_to"></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mission_ing" style="display:block;">
+                    <div class="rich_text">
+                    </div>
+                    <div class="yourself_text">
+                        <div class="yourself_upload">
+                            <p>{$taskinfo.content}</p>
+							<if condition="$taskinfo['sb_type'] eq 1">
+                            <div class="yourself_upload_video">
+                                <input type="text" class="upload_video_link" name="videoLink" id="videoLink" placeholder="请在这里输入链接地址">
+                                <input type="submit" class="sub_bu">
+                            </div>
+							<elseif condition="$taskinfo['sb_type'] eq 0"/>
+                            <div class="yourself_upload_image">
+                                <input type="text" class="upload_image_up" name="imageUp" id="imageUp">
+								<img class="upload_image" src="" style="display:none;">
+                                <input type="submit" class="sub_bu">
+                                <div class="upload_tip">
+                                    <p><img id="image" src="__STATIC__/master/img/uploadP.png"/></p>
+                                    <p style="margin-top:10px;" onclick="uploadphoto.click()">请上传截图</p>
+									<input type="file" id="uploadphoto" name="uploadfile" value="请点击上传图片" style="display:none;">
+                                </div>
+                                <img class="ready_pic" src="__STATIC__/master/img/tans.png"/>
+                            </div>
+							</if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(".sub_bu").click(function (){
+	var className = $(this).parent().attr('class');
+	var link = '';
+	if(className === 'yourself_upload_video'){
+	//添加链接地址
+		link = $("#videoLink").val();
+	
+	}else if(className === 'yourself_upload_image'){
+	//添加图片
+		link = $('.upload_image').attr('src');
+	}
+	$.ajax({
+		type : 'post',
+		data : 'answer='+link+'&uid='+{:I('uid')}+'&gid='+{:I('gid')}+'&task_id='+{:I('tid')}+'&box_id='+{:I('box_id')},
+		url  : "{:U('Task/savedata')}",
+		success:function(msg){
+			if(msg.code != 200){
+				alert('网络传输错误,请稍后再试!');
+				return false;
+			}else{
+				var url = "{WEB_URL}Task/missions?box_id="+{:I('box_id')}+"&uid="+{:I('uid')};
+				window.location.href = url;
+			}
+		}
+	});
+});
+$('#uploadphoto').localResizeIMG({
+	
+      width: 400,
+      quality: 1,
+      success: function (result) {  
+		  var submitData={
+				base64_string:result.clearBase64, 
+			}; 
+		var url = "{:U('Task/updata')}";
+		$.ajax({
+		    type: "POST",
+			url: url,
+		    data: submitData,
+		    dataType:"json",
+		    success: function(data){
+				if(data.status == 200 ){				
+					$(".upload_tip").css('display','none');
+					$(".upload_image_up").css('display','none');
+					$(".upload_image").css('display','block').attr('src',data.url);
+				}
+		    }
+		});
+      }
+  });
+$(".mission_to").click(function (){
+	var style= $(".mission_ing").css('display');
+	console.info(style);
+	if(style == 'block'){
+		$(".num_sta_right img").attr('src',"__STATIC__/master/img/arrow_down.png");
+		$(".mission_ing").css('display','none');
+	}else{
+		$(".num_sta_right img").attr('src',"__STATIC__/master/img/arrow_up.png");
+		$(".mission_ing").css('display','block');
+	}
+});
+</script>
+</body>
+</html>

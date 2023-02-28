@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>美妆达人信息表</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__master/css/LArea.css">
+    <link rel="stylesheet" href="__STATIC__master/css/LCalendar.css">
+    <link rel="stylesheet" href="__STATIC__master/css/daren_info.css?v=5"/>
+    <script type="text/javascript" src="__JS__js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<!-- 地址 -->
+    <script src="__STATIC__master/js/LAreaData1.js"></script>
+    <script src="__STATIC__master/js/LAreaData2.js"></script>
+    <script src="__STATIC__master/js/LArea.js"></script>
+	<!-- 截图 -->
+	<script src="__STATIC__master/js/iscroll-zoom.js"></script>
+	<script src="__STATIC__master/js/hammer.min.js"></script>
+	<script src="__STATIC__master/js/lrz.all.bundle.js"></script>
+	<script src="__STATIC__master/js/PhotoClip.js"></script>
+	<script type="text/javascript" src="__JS__js/trimspance.js"></script>
+	<style>
+		/*a  upload */
+		.a-upload {
+			padding: 4px 10px;
+			height: 25px;
+			line-height: 20px;
+			position: relative;
+			cursor: pointer;
+			color: #fff;
+			background: #fe69b2;
+			border: 1px solid #ddd;
+			border-radius: 10px;
+			overflow: hidden;
+			display: inline-block;
+			*display: inline;
+			*zoom: 1
+		}
+
+		.a-upload  input {
+			position: absolute;
+			font-size: 100px;
+			right: 0;
+			top: 0;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			cursor: pointer
+		}
+
+		.a-upload:hover {
+			color: #444;
+			background: #eee;
+			border-color: #ccc;
+			text-decoration: none
+		}
+		#clipBtn{
+		    color: #fff;
+			height: 35px;
+			width: 125px;
+			background-color: #fe69b2;
+			display: inline-block;
+			float: right;
+			line-height: 35px;
+			border: 1px solid #ddd;
+			border-radius: 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="ding_wei_top">
+            <img src="__STATIC__/master/img/dingwei_top.png"/>
+        </div>
+        <div class="top_pic_bg">
+            <img src="__STATIC__/master/img/top_bg.png"/>
+        </div>
+        <div class="info_fill">
+            <ul>
+                <li>
+                    <input type="text" class="fill_cell name" placeholder="姓名">
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <input type="text" class="fill_cell nickname" placeholder="昵称">
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <div class="cell_left">出生年月</div>
+                    <div class="cell_right">
+                        <input type="text" id="birth_year" class="fill_cell" placeholder="请选择" readonly value="2000-01-01">
+                        <i class="to-enter"></i>
+                    </div>
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <div class="cell_left">肤质</div>
+                    <div class="cell_right">
+                        <input type="text" id="skin_type" class="fill_cell" placeholder="请选择" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <div class="cell_left">身高</div>
+                    <div class="cell_right">
+                        <input type="text" id="height_cm" class="fill_cell" placeholder="请选择" readonly value="168">
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="fill_cell profession" placeholder="职业">
+                </li>
+                <li>
+                    <div class="cell_left">收入</div>
+                    <div class="cell_right">
+                        <input type="text" id="salary" class="fill_cell" placeholder="请选择" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="fill_cell weixin" placeholder="微信号">
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <input type="number" class="fill_cell QQ" placeholder="QQ号">
+                </li>
+                <li>
+                    <input type="email" class="fill_cell email" placeholder="邮箱">
+                    <i class="imp"></i>
+                </li>
+                <li>
+                    <input type="text" class="fill_cell weibo" placeholder="微博地址">
+                </li>
+                <li class="selfie">
+                    <div class="cell_left">自拍照</div>
+                    <div class="cell_right">
+                        <div class="pic_border" id="my_photo">
+                            <i class="la_pic"></i>
+                        </div>
+                        <input type="text" id="self_pic" class="fill_cell" placeholder="点击上传照片" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                    <i class="imp"></i>
+                </li>
+                <li style="position:relative">
+                    <input type="text" id="area_in" class="fill_cell" placeholder="所在省市区县" readonly>
+					<input id="address_code" type="hidden" />
+                    <i class="to-enter2"></i>
+                    <i class="imp"></i>
+                </li>
+                <li class="text_detail">
+                    <textarea class="fill_cel_text details" placeholder="详细收货地址"></textarea>
+                    <i class="imp2"></i>
+                </li>
+            </ul>
+			<div class="info_submit">提交</div>
+        </div>
+        <div class="ding_wei_bottom">
+            <img src="__STATIC__/master/img/dingwei_bottom.png"/>
+        </div>
+    </div>
+    <div class="fileMask"></div>
+    <div class="picker-modal1">
+        <p class="picker-item1">请选择</p>
+        <div class="picker-item1 picker-selected" data-picker-value="干性皮肤" value_type="1">干性皮肤</div>
+        <div class="picker-item1" data-picker-value="中性皮肤" value_type="2">中性皮肤</div>
+        <div class="picker-item1" data-picker-value="油性皮肤" value_type="3">油性皮肤</div>
+        <div class="picker-item1" data-picker-value="混合性皮肤" value_type="4">混合性皮肤</div>
+        <div class="picker-item1" data-picker-value="敏感性皮肤" value_type="5">敏感性皮肤</div>
+    </div>
+    <div class="picker-modal3">
+        <p class="picker-item3">请选择</p>
+        <div class="picker-item3 picker-selected" data-picker-value="1000-3000" value_type="1">1000-3000</div>
+        <div class="picker-item3 " data-picker-value="3000-6000" value_type="2">3000-6000</div>
+        <div class="picker-item3" data-picker-value="6000-1w" value_type="3">6000-1w</div>
+        <div class="picker-item3" data-picker-value="1w以上" value_type="4">1w以上</div>
+    </div>
+	<div class="photo">
+		<div id="clipArea"></div>
+		<p style="font-size:24px;">
+			<a href="javascript:(0);" class="a-upload"><input type="file" name="" id="file">点击这里上传文件</a>
+			<span id="clipBtn">确认截图</span>
+		</p>
+		
+	</div>
+    <script src="__STATIC__/master/js/picker2.js"></script>
+    <script type="text/javascript" src="__STATIC__/master/js/LCalendar.js"></script>
+    <script>
+        //出生日期
+        var calendar = new LCalendar();
+        calendar.init({
+            'trigger': '#birth_year',
+            'type': 'date',
+            'minDate': '1900-1-1',
+            'maxDate': new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+        });
+        var calendar = new LCalendar();
+        calendar.init({
+            'trigger': '#height_cm',
+            'type': 'ym',
+            'minDate': '150',
+            'maxDate': String(new Date().getFullYear()-100).substring(0,3) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+        });
+        var area2 = new LArea();
+		area2.init({
+			'trigger': '#area_in',
+			'valueTo': '#address_code',
+			'keys': {
+				id: 'value',
+				name: 'text'
+			},
+			'type': 2,
+			'data': [provs_data, citys_data, dists_data]
+		});
+    </script>
+	<script>
+	$("#self_pic").click(function (){
+		$(".fileMask").css("display","block");
+		$(".photo").css("display","block");
+	});
+	</script>
+	<script>
+	var photo = '';
+	var checkQQ     = /^\d{5,15}$/;
+	var checkMobile = /^1[34578]\d{9}$/;
+	var checkEmail  = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+	var imag = [400,300];
+	var pc = new PhotoClip('#clipArea', {
+		size: imag,
+		outputSize: 640,
+		//adaptive: ['60%', '80%'],
+		file: '#file',
+		view: '#my_photo',
+		ok: '#clipBtn',
+		//img: 'img/mm.jpg',
+		loadStart: function() {
+			console.log('开始读取照片');
+		},
+		loadComplete: function() {
+			console.log('照片读取完成');
+		},
+		done: function(dataURL) {
+			photo = dataURL;
+		},
+		fail: function(msg) {
+			alert(msg);
+		}
+	});	
+	$("#clipBtn").click(function (){
+		$(".fileMask").css("display","none");
+		$(".photo").css("display","none");
+		$(".la_pic").css("display","none");
+	});
+	$(".fileMask").click(function (){
+		$(".fileMask").css("display","none");
+		$(".picker-modal1").css("display","none");
+		$(".picker-modal3").css("display","none");
+		$(".photo").css("display","none");
+	});
+	$(".info_submit").click(function (){
+		var name       = trimspance($(".name").val());
+		var nickname   = trimspance($(".nickname").val());
+		var birthday   = $("#birth_year").val();
+		var skin       = $("#skin_type").attr("value_type");
+		var height     = $("#height_cm").val() ? $("#height_cm").val() : 168;
+		var profession = $(".profession").val() ? $(".profession").val() : '保密';
+		var income     = $("#salary").attr("value_type") ? $("#salary").attr("value_type") : 1;
+		var weixin     = $(".weixin").val();
+		var QQ         = $(".QQ").val() ? $(".QQ").val() : '';
+		var email      = $(".email").val();
+		var weibo      = $(".weibo").val() ? $(".weibo").val() : '';
+		var add_code   = $("#address_code").val();
+		var detail     = $(".details").val();
+		//photo = photo.split('"');
+		add_code=add_code.split(',');
+		
+		if(name == '' || nickname == '' || birthday == '' || skin == '' || weixin == '' || email == '' || photo == '' || add_code == '' || detail == ''){
+			alert('带“*”为必填项，请填写完整后提交！');
+			return false;
+		}
+		if(nickname.length > 8 || name.length > 8){
+			alert('用户名、昵称不能超过8个字符!');
+			return false;
+		}
+		if(!checkEmail.test(email)){
+			alert('请输入正确的电子邮箱');
+			return false;
+		}
+		var dataString = 'name='+name+'&nickname='+nickname+'&birthday='+birthday+'&skin='+skin+'&height='+height+'&profession='+profession+'&income='+income+'&weixin='+weixin+'&QQ='+QQ+'&email='+email+'&weibo='+weibo+'&photo='+photo+'&regions_code='+add_code[2]+'&address_detail='+detail+'&mobile='+{$mobile}+'&box_id='+{:I('box_id')};
+		var url = '{WEB_URL}master/regedit';
+		$.ajax({
+			type : 'post',
+			data : dataString,
+			url  : url,
+			success:function(msg){
+				if(msg.code == 200){
+					url = '{WEB_URL}master/success';
+					window.location.href = url;
+					return false;
+				}else if(msg.code == 201){
+					alert('用户信息获取失败！');
+					return false;
+				}else if(msg.code == 302){
+					alert('电子邮箱格式错误！');
+					return false;
+				}else if(msg.code == 301){
+					alert('保存失败！');
+					return false;
+				}else{
+					alert('网络传输出错!');
+					return false;
+				}
+			}
+		});
+	});
+	</script>
+<script>
+wx.config({
+	appId: "{$ticket[appid]}", // 必填，公众号的唯一标识
+	timestamp: "{$ticket[timestamp]}", // 必填，生成签名的时间戳
+	nonceStr: "{$ticket[noncestr]}", // 必填，生成签名的随机串
+	signature: "{$ticket[signature]}",// 必填，签名，见附录1
+	jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','chooseImage','uploadImage']
+});
+wx.onMenuShareTimeline({
+	title: '{$desc}', // 分享标题
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareAppMessage({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	type: '', // 分享类型,music、video或link，不填默认为link
+	dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareQQ({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+	   // 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareWeibo({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+</script>
+<script type="text/javascript" src="__JS__js/youmengtongji.js"></script>
+<script type="text/javascript" src="__JS__js/delectwenzi.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_index.css"/>
+    <link rel="stylesheet" href="__STATIC__/master/css/join_mission.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/js/trimspance.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="fbg">
+            <img class="logo_pic" src="__STATIC__/master/img/logo.png">
+            <img class="login_in_title_pic" src="__STATIC__/master/img/top6.png"/>
+            <img class="fbg_top" src="__STATIC__/master/img/fbg_top.png"/>
+            <img class="fbg_bottom" src="__STATIC__/master/img/fbg_bottom.png"/>
+            <div class="box_content">
+                <div class="signUp_txt login_in_txt">
+                    <ul>
+                        <li>
+                            <input class="sign_put" type="number" id="phone_number" name="phone_number" placeholder="手机号">
+                        </li>
+                        <li>
+                            <input class="sign_put" type="password" id="code" name="code" placeholder="密码">
+                            <p class="put_tip"><a href="#" onclick="jumpurl()">忘记密码&nbsp;</a></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="commit_for"><p>确定</p></div>
+            </div>
+        </div>
+    </div>
+<script>
+
+$(".commit_for").click(function (){
+	var mobile = trimspance($("#phone_number").val()) ? trimspance($("#phone_number").val()) : '';
+	var password = trimspance($("#code").val()) ? trimspance($("#code").val()) : '';
+	var url = "{:U('Home/Logon/checklogon')}";
+	if(mobile == '' || password == ''){
+		alert('手机号和密码不能为空！');
+		return false;
+	}
+	var checkMobile = /^1[34578]\d{9}$/;
+	if(!checkMobile.test(mobile)){
+		alert('请输入正确的手机号码');
+		return false;
+	}else{
+		$.ajax({
+			type : 'post',
+			data : 'mobile='+mobile+'&password='+password,
+			url  : url,
+			success:function(msg){
+				if(msg.code == 200){
+					url = "{WEB_URL}Task/index?box_id="+msg.box_id+'&uid='+msg.uid;
+					window.location.href = url;
+				}else{
+					alert('验证失败，请核对后再次输入!');
+					return false;
+				}
+			}
+		});
+	}
+});
+function jumpurl(){
+	var mobile = trimspance($("#phone_number").val()) ? trimspance($("#phone_number").val()) : '';
+	var url = "{WEB_URL}Logon/checkindex?mobile="+mobile;
+	window.location.href = url;
+}
+</script>
+</body>
+</html>

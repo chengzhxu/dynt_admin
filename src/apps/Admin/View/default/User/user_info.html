@@ -1,0 +1,180 @@
+<extend name="Public/base"/>
+<block name="body">
+    <script type="text/javascript" charset="utf-8" src="/Public/Admin/Static/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="/Public/Admin/Static/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+    <div class="main-title">
+        <h2>用户详情</h2>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+    <br/>
+    <div>
+            <table class="table table-bordered table-striped ">
+                <tbody>
+                    <tr>
+                        <th style='width:150px;'>
+                            UID
+                        </th>
+                        <td >
+                            {$user.uid}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style='width:150px;'>
+                            手机号
+                        </th>
+                        <td >
+                            {$user.mobile}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            昵称(双击修改)
+                        </th>
+                        <td id="user{$user.uid}">
+                            <label ondblclick="changeNickname({$user.uid}, '{$user.nickname}')">{$user.nickname}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            头像
+                        </th>
+                        <td>
+                            <img src="{$user.headimg}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            性别
+                        </th>
+                        <td>
+                            <eq name="user.gender" value="0">
+                                女
+                            </eq>
+                            <eq name="user.gender" value="1">
+                                男
+                            </eq>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            用户地区
+                        </th>
+                        <td>
+                            <php> echo get_select('WORK_ADDRESS' , $user['regions']);</php>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            账号创建时间
+                        </th>
+                        <td>
+                            {$user.dateline|time_format}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            最后登录时间
+                        </th>
+                        <td>
+                            {$user.last_time|time_format}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+    </div>
+    
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+        
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            
+            var old_nickname = "";
+        var old_uid = 0;
+            
+            //修改昵称
+        function changeNickname(uid,nickname){
+            old_nickname = nickname;
+            old_uid = uid;
+            var user_input = "<input type='text' id='"+uid+"' value='"+nickname+"' style='width:100px;' onblur='edit_nickname(this)'/>";
+            document.getElementById('user' + uid).innerHTML = user_input;
+            document.getElementById(uid).focus();
+        }
+        
+        function edit_nickname(t){
+            if(old_nickname == t.value){
+                document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+old_nickname+"\")'>"+old_nickname+"</label>";
+                
+            }else{
+                if(t.value == "" || t.value == null){
+                    alert('请输入新昵称');
+                    return false;
+                }else{
+                    $.getJSON("{:U('change_nickname')}",{uid:old_uid,nickname:t.value},function(json){
+                        if(json.status == 1){
+                            document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+t.value+"\")'>"+t.value+"</label>";
+    //                            document.location.reload();
+                        }else if(json.status == -1){
+                            alert("昵称已存在，不能重复!");
+                            document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+old_nickname+"\")'>"+old_nickname+"</label>";
+                        }else{
+                            alert("编辑失败!");
+                        }
+                    });
+                }
+            }
+//            alert(t.value);
+        }
+        
+    </script>
+</block>

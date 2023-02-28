@@ -1,0 +1,170 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>消息列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+            <a href="{:U('add_message')}"><button class="btn ">新增消息</button></a>
+        </div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: 0px;">
+            <div class="input-group">
+                <select name="" style="border: 1px solid #BAD6EC;width:150px; margin-left: -160px; " class="search-input form-control" onchange="otChange(this)" >
+                    <option value="-1" selected>全部</option>
+                    <foreach name="alltype" item="v" key="k">
+                        <eq name="k" value="$type">
+                            <option value="{$k}" selected>{$v}</option>
+                            <else/>
+                            <option value="{$k}">{$v}</option>
+                        </eq>
+                    </foreach>
+                </select>
+                <input name="type" type="hidden" id="type" value="{:I('type')}"/>
+                
+                <input type="text" name="content" class="search-input form-control" value="{:I('content')}"
+                       placeholder="内容搜索">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('index')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">ID</th>
+                <th class="" style="width: 500px;">消息内容</th>
+                <th class="">发送人</th>
+                <th class="">接收人</th>
+                <th class="">消息类型</th>
+                <th class="">对象</th>
+                <th class="">发送时间</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.content}</td>
+                        <td><a href="{:U('User/user_info?uid='.$vo['from_uid'])}" >{$vo.from_nick}</a></td>
+                        <td>
+                            <eq name="vo.to_uid" value="0">
+                                {$vo.to_nick}
+                                <else/>
+                                <a href="{:U('User/user_info?uid='.$vo['to_uid'])}" >{$vo.to_nick}</a>
+                            </eq>
+                        </td>
+                        <td>{$vo.msg_type}</td>
+                        <td>
+                            <eq name="vo.objtype" value="0">
+                                {$vo.obj_title}
+                                <else/>
+                                <a href="{:U($vo['obj_url'])}" >{$vo.obj_title}</a>
+                            </eq>
+                        </td>
+                        <td>{$vo.dateline|time_format}</td>
+                        <td>
+                            <a href="{:U('del_message?id='.$vo['id'])}" class="btn btn-sm btn-primary confirm ajax-get">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+</block>
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            
+            function otChange(t){
+                document.getElementById("type").value = t.value;
+            }
+    </script>
+</block>

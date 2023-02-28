@@ -1,0 +1,96 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <script type="text/javascript">
+        
+    </script>
+    <div class="main-title">
+        <h2>编辑广告</h2>
+    </div>
+    <div style="text-align: -webkit-center; ">
+        <form action="add_advert" method="post" enctype="multipart/form-data" onsubmit="return validateShow()">
+            <table cellpadding="15px;">
+                <tbody>
+                    <tr>
+                        <td>
+                            名称：
+                        </td>
+                        <td colspan="2">
+                            <input id="name" name="name" value="{$advert.name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            图片：
+                        </td>
+                        <td>
+                            <input type="text" value="{$advert.thumbs}" id="thumb" name="thumb">
+                            <input type="file" class="button bg-blue margin-left" id="thumbs" name="thumbs" style="float:left;" value="">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="id" value="{$id}"/>
+            <div class="form-item">
+                <input class="btn btn-return" type="submit" name="submit" id="btsub" value="提 交" />
+                <button class="btn btn-return" style="margin-left: 50px;" onclick="javascript:history.back(-1);return false;">返 回</button>
+
+            </div>
+        </form>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+        
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+        
+    </script>
+</block>

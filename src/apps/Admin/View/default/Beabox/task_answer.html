@@ -1,0 +1,239 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>用户提交列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+        </div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: -35px;">
+            <div style="margin-left: -160px; width: 150px; height: 35px; padding-top: 35px;">
+                <select name="" style="border: 1px solid #BAD6EC;width:150px; margin-left: 0px; " class="search-input form-control" onchange="stChange(this)" >
+                    <option value="-1" selected>全部</option>
+                    <foreach name="allstatus" item="v" key="k">
+                        <eq name="k" value="$status">
+                            <option value="{$k}" selected>{$v}</option>
+                            <else/>
+                            <option value="{$k}">{$v}</option>
+                        </eq>
+                    </foreach>
+                </select>
+                <input type="hidden" name="status" id="status" value="{:I('status')}"/>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" name="nickname" class="search-input form-control" value="{:I('nickname')}"
+                       placeholder="用户搜索">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('task_answer')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">ID</th>
+                <th class="">手机号</th>
+                <th class="">昵称</th>
+                <th class="">任务名称</th>
+                <th class="" style="width:200px;">提交结果</th>
+                <th class="">所属盒子</th>
+                <th class="">所属产品</th>
+                <th class="">状态</th>
+                <th class="">提交时间</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td><a href="{:U('User/user_info?uid='.$vo['uid'])}">{$vo.mobile}</a></td>
+                        <td><a href="{:U('User/user_info?uid='.$vo['uid'])}">{$vo.nickname}</a></td>
+                        <td>{$vo.task_name}</td>
+                        <td><a href="{$vo.answer}" target="_blank">{$vo.answer}</a></td>
+                        <td><a href="{:U('box_goods?id='.$vo['box_id'])}">{$vo.box_name}</a></td>
+                        <td>{$vo.goods_name}</td>
+                        <td>
+                            <eq name="vo.status" value="0">
+                                <span style="color:blue;">未完成</span>
+                            </eq>
+                            <eq name="vo.status" value="1">
+                                <span style="color:blue;">审核中</span>
+                            </eq>
+                            <eq name="vo.status" value="2">
+                                <span style="color:green;">完成</span>
+                            </eq>
+                            <eq name="vo.status" value="3">
+                                <span style="color:red;">失败</span>
+                            </eq>
+                        </td>
+                       <td><span>{$vo.dateline|time_format}</span></td>
+                        <td>
+                            <a style="cursor: pointer;" class="btn btn-sm btn-primary" data-id="{$vo.id}" 
+                                    data-toggle="modal" data-target="#modal_box">审核</a>
+                            <a style="cursor: pointer;" class="btn btn-sm btn-primary" href="{:U('answer_info?id='.$vo['id'])}">详情</a>
+                        </td>
+
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+</block>
+
+<block name="modal">
+    <div class="modal fade" id="modal_box"  style="display:none; overflow:auto;position:absolute;">
+        <div class="modal-dialog" style="width: 500px; height: 430px;">
+            <div class="modal-content" style="width: 500px; height: 430px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body" style="width:530px;margin: 30px auto">
+                    状态：<select name="check_status" id="check_status" style="width: 150px; height: 28px;">
+                            <foreach name="allstatus" item="v" key="k">
+                                    <option value="{$k}" >{$v}</option>
+                            </foreach> 
+                    </select>
+                    <br/><br/>
+                    备注：<textarea rows="8" cols="50" id="remarks" name="remarks"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-role="saveCountSetting">
+                        <span class="ui-button-text">
+                            <i class="icon-ok bigger-110"></i>
+                            确 定
+                        </span>
+                    </button>
+                    <button class="btn btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-dismiss="modal">
+                        <span class="ui-button-text">
+                            <i class="icon-remove bigger-110"></i>
+                            取 消
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        
+        var id = 0;
+        $('[data-role=saveCountSetting]').click(function () {
+            var check_status = document.getElementById("check_status").value;
+            var remarks = document.getElementById('remarks').value;
+            $.getJSON("{:U('audting')}",{id:id, status:check_status, remarks:remarks},function(json){
+                if(json.code == 200){
+                    alert('审核完成!');
+                    document.location.reload();
+                }else{
+                    alert("审核失败，请联系管理员！");
+                }  
+            })
+        });
+        
+        $('#modal_box').on('shown.zui.modal', function (event) {
+            var button = $(event.relatedTarget);
+            id = button.data('id');
+        })
+    </script>
+</block>
+
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            function stChange(t){
+                document.getElementById("status").value = t.value;
+            }
+    </script>
+</block>

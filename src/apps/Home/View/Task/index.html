@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务解锁</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_index.css?v=1"/>
+    <link rel="stylesheet" href="__STATIC__/master/css/join_mission.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="fbg">
+            <img class="title_pic78" src="__STATIC__/master/img/top78.png"/>
+            <img class="fbg_top" src="__STATIC__/master/img/fbg_top.png"/>
+            <img class="fbg_bottom" src="__STATIC__/master/img/fbg_bottom.png"/>
+            <div class="personal_info"><img src="{$userinfo['photo']}"/><span>{$userinfo['nickname']}</span></div>
+            <div class="box_content78 wait_content">
+                <div class="missions_wait_to">
+                    <p class="wait_to_pic">
+                        <img src="__STATIC__/master/img/wait_day.png">
+                        <img class="wait_unlock" src="__STATIC__/master/img/lock_wait.png"/>
+                    </p>
+                    <p class="wait_to_day">倒计时<if condition="$day lt 100">0{$day}<else/>{$day}</if>天</p>
+                    <p class="wait_to_title">任务说明</p>
+                    <div class="wait_to_text">如果拿到了盒子需要你完成相应的任务，是否愿意呢
+                        与你的朋友面对面交流体验感受，通过社交媒体在线分享；
+                        参与收官小问卷，评估活动期间体验的产品；
+                        参与收官小问卷，评估活动期间体验的产品
+                        参与收官小问卷，评估活动期间体验的产品
+                        参与收官小问卷，评估活动期间体验的产品参与收官小问卷，评估活动期间体验的产品
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+$(".wait_unlock").click(function(){
+	var url = "{WEB_URL}Task/missions?box_id="+{:I('box_id')}+'&uid='+{:I('uid')};
+	window.location.href = url;
+});
+</script>
+</body>
+</html>

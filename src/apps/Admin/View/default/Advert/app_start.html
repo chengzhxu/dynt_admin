@@ -1,0 +1,143 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>启动图列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+            <a href="{:U('add_start')}"><button class="btn ">新增启动图</button></a>
+        </div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: 0px;">
+            <div class="input-group" style="margin-top: 0px;">
+                <input type="text" name="title" class="search-input form-control" value="{:I('title')}"
+                       placeholder="标题搜索">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('app_start')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">ID</th>
+                <th class="">标题</th>
+                <th class="">图片</th>
+                <th class="">状态</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.title}</td>
+                        <td><a href="{$vo.thumb}" target="_blank" title="查看大图"><img src="{$vo.thumb}" width="50" height="50"></a></td>
+                        <td>
+                            <eq name="vo.status" value="1">
+                                已启动
+                                <else/>
+                                未启动
+                            </eq>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('add_start?id='.$vo['id'])}">编辑</a>
+                            <a href="{:U('del_start?id='.$vo['id'])}" class="btn btn-sm btn-primary confirm ajax-get">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+</block>
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+    </script>
+</block>

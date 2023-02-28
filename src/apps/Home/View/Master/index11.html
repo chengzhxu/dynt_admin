@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>美妆达人信息表</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/LArea.css">
+    <link rel="stylesheet" href="__STATIC__/master/css/LCalendar.css">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_info.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+	<!-- 地址 -->
+    <script src="__PUBLIC__/Home/home/master/js/LAreaData1.js"></script>
+    <script src="__PUBLIC__/Home/home/master/js/LAreaData2.js"></script>
+    <script src="__PUBLIC__/Home/home/master/js/LArea.js"></script>
+	<!-- 截图 -->
+	<script src="__STATIC__/master/js/iscroll-zoom.js"></script>
+	<script src="__STATIC__/master/js/hammer.min.js"></script>
+	<script src="__STATIC__/master/js/lrz.all.bundle.js"></script>
+	<script src="__STATIC__/master/js/PhotoClip.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="ding_wei_top">
+            <img src="__STATIC__/master/img/dingwei_top.png"/>
+        </div>
+        <div class="top_pic_bg">
+            <img src="__STATIC__/master/img/top_bg.png"/>
+        </div>
+        <div class="info_fill">
+            <ul>
+                <li>
+                    <input type="text" class="fill_cell name" placeholder="姓名">
+                </li>
+                <li>
+                    <input type="text" class="fill_cell nickname" placeholder="昵称">
+                </li>
+                <li>
+                    <div class="cell_left">出生年月</div>
+                    <div class="cell_right">
+                        <input type="text" id="birth_year" class="fill_cell" placeholder="请选择" readonly value="">
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="cell_left">肤质</div>
+                    <div class="cell_right">
+                        <input type="text" id="skin_type" class="fill_cell" placeholder="请选择" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <div class="cell_left">身高</div>
+                    <div class="cell_right">
+                        <input type="text" id="height_cm" class="fill_cell" placeholder="请选择" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <input type="text" class="fill_cell profession" placeholder="职业">
+                </li>
+                <li>
+                    <div class="cell_left">收入</div>
+                    <div class="cell_right">
+                        <input type="text" id="salary" class="fill_cell" placeholder="请选择" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li>
+                    <input type="number" class="fill_cell mobile" placeholder="手机号码">
+                </li>
+                <li>
+                    <input type="text" class="fill_cell weixin" placeholder="微信号">
+                </li>
+                <li>
+                    <input type="number" class="fill_cell QQ" placeholder="QQ号">
+                </li>
+                <li>
+                    <input type="emial" class="fill_cell email" placeholder="邮箱">
+                </li>
+                <li>
+                    <input type="text" class="fill_cell weibo" placeholder="微博地址">
+                </li>
+                <li class="selfie">
+                    <div class="cell_left">自拍照</div>
+                    <div class="cell_right">
+                        <div class="pic_border" id="my_photo">
+                            <i class="la_pic"></i>
+                        </div>
+                        <input type="text" id="self_pic" class="fill_cell" placeholder="点击上传照片" readonly>
+                        <i class="to-enter"></i>
+                    </div>
+                </li>
+                <li style="position:relative">
+                    <input type="text" id="area_in" class="fill_cell" placeholder="所在省市区县" readonly>
+					 <input id="address_code" type="hidden" />
+                    <i class="to-enter2"></i>
+                </li>
+                <li class="text_detail">
+                    <textarea class="fill_cel_text details" placeholder="详细收货地址"></textarea>
+                </li>
+            </ul>
+			<div class="info_submit">提交</div>
+        </div>
+        <div class="ding_wei_bottom">
+            <img src="__STATIC__/master/img/dingwei_bottom.png"/>
+        </div>
+    </div>
+    <div class="fileMask"></div>
+    <div class="picker-modal1">
+        <p class="picker-item1">请选择</p>
+        <div class="picker-item1 picker-selected" data-picker-value="干性皮肤" value_type="1">干性皮肤</div>
+        <div class="picker-item1" data-picker-value="中性皮肤" value_type="2">中性皮肤</div>
+        <div class="picker-item1" data-picker-value="油性皮肤" value_type="3">油性皮肤</div>
+        <div class="picker-item1" data-picker-value="混合性皮肤" value_type="4">混合性皮肤</div>
+        <div class="picker-item1" data-picker-value="敏感性皮肤" value_type="5">敏感性皮肤</div>
+    </div>
+    <div class="picker-modal3">
+        <p class="picker-item3">请选择</p>
+        <div class="picker-item3 picker-selected" data-picker-value="1000-3000" value_type="1">1000-3000</div>
+        <div class="picker-item3 " data-picker-value="3000-6000" value_type="2">3000-6000</div>
+        <div class="picker-item3" data-picker-value="6000-1w" value_type="3">6000-1w</div>
+        <div class="picker-item3" data-picker-value="1w以上" value_type="4">1w以上</div>
+    </div>
+	<div class="photo">
+		<div id="clipArea"></div>
+		<input type="file" id="file">
+		<button id="clipBtn">截取</button>
+	</div>
+	
+    <script src="__STATIC__/master/js/picker2.js"></script>
+    <script type="text/javascript" src="__STATIC__/master/js/LCalendar.js"></script>
+    <script>
+        //出生日期
+        var calendar = new LCalendar();
+        calendar.init({
+            'trigger': '#birth_year',
+            'type': 'date',
+            'minDate': '1900-1-1',
+            'maxDate': new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+        });
+        var calendar = new LCalendar();
+        calendar.init({
+            'trigger': '#height_cm',
+            'type': 'ym',
+            'minDate': '150',
+            'maxDate': String(new Date().getFullYear()-100).substring(0,3) + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
+        });
+		var area2 = new LArea();
+		area2.init({
+			'trigger': '#area_in',
+			'valueTo': '#address_code',
+			'keys': {
+				id: 'value',
+				name: 'text'
+			},
+			'type': 2,
+			'data': [provs_data, citys_data, dists_data]
+		});
+    </script>
+	<script>
+	$("#self_pic").click(function (){
+		$(".fileMask").css("display","block");
+		$(".photo").css("display","block");
+	});
+	</script>
+	<script>
+	var imag = [400,300];
+	var pc = new PhotoClip('#clipArea', {
+		size: imag,
+		outputSize: 640,
+		//adaptive: ['60%', '80%'],
+		file: '#file',
+		view: '#my_photo',
+		ok: '#clipBtn',
+		//img: 'img/mm.jpg',
+		loadStart: function() {
+			console.log('开始读取照片');
+		},
+		loadComplete: function() {
+			console.log('照片读取完成');
+		},
+		done: function(dataURL) {
+			console.log(dataURL);
+		},
+		fail: function(msg) {
+			alert(msg);
+		}
+	});
+	// 加载的图片必须要与本程序同源，否则无法截图
+	//pc.load('img/mm.jpg');
+	</script>
+	<script>
+	var checkQQ     = /^\d{5,15}$/;
+	var checkMobile = /^1[34578]\d{9}$/;
+	var checkEmail  = /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+	$("#clipBtn").click(function (){
+		$(".fileMask").css("display","none");
+		$(".photo").css("display","none");
+		$(".la_pic").css("display","none");
+	});
+	$(".fileMask").click(function (){
+		$(".fileMask").css("display","none");
+		$(".picker-modal1").css("display","none");
+		$(".picker-modal3").css("display","none");
+		$(".photo").css("display","none");
+	});
+	$(".info_submit").click(function (){
+		var name       = $(".name").val();
+		var nickname   = $(".nickname").val();
+		var birthday   = $("#birth_year").val();
+		var skin       = $("#skin_type").attr("value_type");
+		var height     = $("#height_cm").val();
+		var profession = $(".profession").val();
+		var income     = $("#salary").attr("value_type");
+		var mobile     = $(".mobile").val();
+		var weixin     = $(".weixin").val();
+		var QQ         = $(".QQ").val();
+		var email      = $(".email").val();
+		var weibo      = $(".weibo").val();
+		var photo      = $("#my_photo").css('background-image');
+		var add_code   = $("#address_code").val();
+		var detail     = $(".details").val();
+		photo = photo.split('"');
+		add_code=add_code.split(',');
+		console.info(nickname.length);
+		return false;
+		if(name == '' || nickname == '' || birthday == '' || skin == '' || height == '' || profession == '' || income == '' || mobile == '' || weixin == '' || QQ == '' || email == '' || weibo == '' || photo == '' || add_code == '' || detail == ''){
+			alert('所有内容均为必填项,请填写完整在提交!');
+			return false;
+		}
+		if(nickname.length > 8 || name.length > 8){
+			alert('用户名、昵称不能超过8个字符!');
+			return false;
+		}
+		if(!checkQQ.test(QQ)){
+			alert('请输入正确的QQ号码');
+			return false;
+		}
+		if(!checkMobile.test(mobile)){
+			alert('请输入正确的手机号码');
+			return false;
+		}
+		if(!checkEmail.test(email)){
+			alert('请输入正确的电子邮箱');
+			return false;
+		}
+		var dataString = 'name='+name+'&nickname='+nickname+'&birthday='+birthday+'&skin='+skin+'&height='+height+'&profession='+profession+'&income='+income+'&mobile='+mobile+'&weixin='+weixin+'&QQ='+QQ+'&email='+email+'&weibo='+weibo+'&photo='+photo[1]+'&regions_code='+add_code[2]+'&address_detail='+detail;
+		var url = '{WEB_URL}master/regedit';
+		$.ajax({
+			type : 'post',
+			data : dataString,
+			url  : url,
+			success:function(msg){
+				if(msg.code == 200){
+					alert('登记成功!');
+					return false;
+				}else if(msg.code == 201){
+					alert('修改成功!');
+					return false;
+				}else{
+					alert('网络传输出错!');
+					return false;
+				}
+			}
+		});
+	});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<extend name="Public/base"/>
+<block name="body">
+    <script type="text/javascript" charset="utf-8" src="/Public/Admin/Static/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="/Public/Admin/Static/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+    <div class="main-title">
+        <h2>用户提交详情</h2>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+    <br/>
+    <div>
+            <table class="table table-bordered table-striped ">
+                <tbody>
+                    <tr>
+                        <th style='width:150px;'>
+                            ID
+                        </th>
+                        <td >
+                            {$answer.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style='width:150px;'>
+                            盒子名称
+                        </th>
+                        <td >
+                            {$answer.box_name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            产品名称
+                        </th>
+                        <td>
+                            {$answer.goods_name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            任务名称
+                        </th>
+                        <td>
+                            {$answer.task_name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            用户手机号
+                        </th>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$answer['uid'])}">{$answer.mobile}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            用户昵称
+                        </th>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$answer['uid'])}">{$answer.nickname}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            审核状态
+                        </th>
+                        <td>
+                            <eq name="answer.status" value="0">
+                                未完成
+                            </eq>
+                            <eq name="answer.status" value="1">
+                                审核中
+                            </eq>
+                            <eq name="answer.status" value="2">
+                                完成
+                            </eq>
+                            <eq name="answer.status" value="3">
+                                失败
+                            </eq>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提交结果
+                        </th>
+                        <td>
+                            {$answer.answer}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            提交时间
+                        </th>
+                        <td>
+                            <gt name="answer.dateline" value="0">
+                                {$answer.dateline|time_format}
+                            </gt>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            审核人
+                        </th>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$answer['admin_id'])}">{$answer.admin_name}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            审核备注
+                        </th>
+                        <td>
+                            {$answer.remarks}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            审核时间
+                        </th>
+                        <td>
+                            <gt name="answer.admin_time" value="0">
+                                {$answer.admin_time|time_format}
+                            </gt>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+    </div>
+    
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+        
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            
+            var old_nickname = "";
+        var old_uid = 0;
+            
+            //修改昵称
+        function changeNickname(uid,nickname){
+            old_nickname = nickname;
+            old_uid = uid;
+            var user_input = "<input type='text' id='"+uid+"' value='"+nickname+"' style='width:100px;' onblur='edit_nickname(this)'/>";
+            document.getElementById('user' + uid).innerHTML = user_input;
+            document.getElementById(uid).focus();
+        }
+        
+        function edit_nickname(t){
+            if(old_nickname == t.value){
+                document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+old_nickname+"\")'>"+old_nickname+"</label>";
+                
+            }else{
+                if(t.value == "" || t.value == null){
+                    alert('请输入新昵称');
+                    return false;
+                }else{
+                    $.getJSON("{:U('change_nickname')}",{uid:old_uid,nickname:t.value},function(json){
+                        if(json.status == 1){
+                            document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+t.value+"\")'>"+t.value+"</label>";
+    //                            document.location.reload();
+                        }else if(json.status == -1){
+                            alert("昵称已存在，不能重复!");
+                            document.getElementById('user' + old_uid).innerHTML = "<label ondblclick='changeNickname("+old_uid+", \""+old_nickname+"\")'>"+old_nickname+"</label>";
+                        }else{
+                            alert("编辑失败!");
+                        }
+                    });
+                }
+            }
+//            alert(t.value);
+        
+        
+    </script>
+</block>

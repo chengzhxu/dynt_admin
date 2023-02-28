@@ -1,0 +1,241 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>用户列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+        </div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: 0px;">
+            <div class="input-group">
+                <select name="" style="border: 1px solid #BAD6EC;width:150px; margin-left: -160px; " class="search-input form-control" onchange="ttChange(this)" >
+                    <option value="-1" selected>全部</option>
+                    <foreach name="all_type" item="v" key="k">
+                        <eq name="k" value="$type">
+                            <option value="{$k}" selected>{$v}</option>
+                            <else/>
+                            <option value="{$k}">{$v}</option>
+                        </eq>
+                    </foreach>
+                </select>
+                <input name="type" type="hidden" id="type" value="{:I('type')}"/>
+                
+                <input type="text" name="nickname" class="search-input form-control" value="{:I('nickname')}"
+                       placeholder="昵称/手机号搜索">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('index')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">UID</th>
+                <th class="">手机号</th>
+                <th class="">昵称</th>
+                <th class="">头像</th>
+                <th class="">注册时间</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.uid}</td>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$vo['uid'])}" >{$vo.mobile}</a>
+                        </td>
+                        <td>
+                            {$vo.nickname}
+                        </td>
+                        <td><a href="{$vo.headimg}" target="_blank" title="查看大图"><img src="{$vo.headimg}" width="50" height="50"></a></td>
+                        <td>{$vo.dateline|time_format}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('User/initPass?uid='.$vo['uid'])}"
+                               accesskey=""class="confirm ajax-get">重置密码</a>
+                            <eq name="vo.type" value="0">
+                                <a style="cursor: pointer; " class="btn btn-sm btn-primary" data-uid="{$vo.uid}" 
+                                    data-toggle="modal" data-target="#modal_box">设为管理员</a>
+                                <else/>
+                                <a class="btn btn-sm btn-primary" onclick="removeAdminOfUser({$vo.uid})" style="cursor: pointer;">解除管理员</a>
+                            </eq>
+                        </td>
+
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+</block>
+
+<block name="modal">
+    <div class="modal fade" id="modal_box"  style="display:none; overflow:auto;position:absolute;">
+        <div class="modal-dialog" style="width: 300px; height: 230px;">
+            <div class="modal-content" style="width: 300px; height: 230px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body" style="width:330px;margin: 30px auto">
+                    管理员类型：<select name="check_type" id="check_type" style="width: 150px;">
+                            <volist name="admin_type" id="vo">
+                                    <option value="{$vo.id}">{$vo.title}</option>
+                            </volist> 
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-role="saveCountSetting">
+                        <span class="ui-button-text">
+                            <i class="icon-ok bigger-110"></i>
+                            确 定
+                        </span>
+                    </button>
+                    <button class="btn btn-sm ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-dismiss="modal">
+                        <span class="ui-button-text">
+                            <i class="icon-remove bigger-110"></i>
+                            取 消
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        
+        var uid = 0;
+        $('[data-role=saveCountSetting]').click(function () {
+            var check_type = document.getElementById("check_type").value;
+            var type = "A";
+            $.getJSON("{:U('changeUserToAdmin')}",{uid:uid, group_id:check_type, type:type},function(json){
+                if(json.status == 1){
+                    alert('操作成功!');
+//                    $('#modal_box').hide();
+//                    $(".modal-backdrop").hide();
+                    document.location.reload(true);
+                }else{
+                    alert("操作失败，请联系管理员！");
+                }  
+            })
+        });
+        
+        $('#modal_box').on('shown.zui.modal', function (event) {
+            var button = $(event.relatedTarget);
+            uid = button.data('uid');
+        })
+    </script>
+</block>
+
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            
+            //解除管理员
+            function removeAdminOfUser(uid){
+                if(confirm("确定要解除该管理员吗？")){
+                    var type = "D";
+                    $.getJSON("{:U('changeUserToAdmin')}",{uid:uid,type:type},function(json){
+                        if(json.status == 1){
+                            alert('操作成功');
+                            document.location.reload(true);
+                        }else{
+                            alert("操作失败，请联系管理员！");
+                        } 
+                    });
+                }
+            }
+            
+            function ttChange(t){
+                document.getElementById("type").value = t.value;
+            }
+    </script>
+</block>

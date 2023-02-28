@@ -1,0 +1,59 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>应用列表</h2>
+    </div>
+
+    <div class="clearfix">
+        <div class="col-xs-10">
+            <a class="btn" href="{:U('add')}">新 增</a>
+            <button class="btn ajax-post confirm" url="{:U('remove')}" target-form="ids">删 除</button>
+        </div>
+    </div>
+
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <tr>
+                    <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                    <th class="">序号</th>
+                    <th class="">应用名称</th>
+                    <th class="">key</th>
+                    <th class="">创建时间</th>
+                    <th class="">简介</th>
+                    <th class="">操作</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <notempty name="list">
+                <volist name="list" id="vo">
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="appid[]" value="{$vo.appid}"/></td>
+                        <td>{$vo.appid}</td>
+                        <td>{$vo.app_name}</td>
+                        <td>{$vo.app_key}</td>
+                        <td><span>{$vo.dateline|time_format=###,"Y-m-d H:i"}</span></td>
+                        <td>{$vo.description}</td>
+                        <td>
+                            <a href="{:U('edit?appid='.$vo['appid'])}">编辑</a>
+                            <a href="{:U('remove?appid='.$vo['appid'])}" class="confirm ajax-get">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="9" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="with-padding">
+        {$pagination}
+    </div>
+
+</block>

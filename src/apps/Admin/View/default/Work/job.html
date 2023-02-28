@@ -1,0 +1,176 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    
+    <link href="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/Admin/Static/zui/lib/datetimepicker/datetimepicker.min.js"></script>
+    
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>求职列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+            <a href="{:U('add_job')}"><button class="btn ">发布求职</button></a>
+        </div>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right" style="margin-top: 0px;">
+            <div class="input-group">
+                <input type="text" name="name" class="search-input form-control" value="{:I('name')}"
+                       placeholder="职位搜索">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('job')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="">ID</th>
+                <th class="">发布人</th>
+                <th class="" style="width: 230px; word-break:break-all;">职位名称</th>
+                <th class="">联系方式</th>
+                <th class="">期望薪资</th>
+                <th class="">排序</th>
+                <th class="">发布时间</th>
+                <th class="">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$vo['uid'])}" >{$vo.nickname}</a>
+                        </td>
+                        <td style="width: 230px; word-break:break-all;">{$vo.position_name}</td>
+                        <td>{$vo.mobile}</td>
+                        <td><php> echo get_select('WORK_SALARY' , $vo['salary']);</php></td>
+                        <td>
+                            <input type="text" style="width: 42px; text-align: center;" value= {$vo.display_order} onfocus="getFirstNumber(this)" 
+                                   onblur="changeFirstNumber({$vo.id},this)"/>
+                        </td>
+                        <td>{$vo.dateline|time_format}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="{:U('job_info?id='.$vo['id'])}">详情</a>
+                            <a href="{:U('del_job?id='.$vo['id'])}" class="btn btn-sm btn-primary confirm ajax-get">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="12" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+    
+</block>
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+        
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            
+            
+            var oldNum = 0;
+        
+            function getFirstNumber(t){
+                var on = t.value;
+                if(on != "" && on > 0){
+                    oldNum = on;
+                }
+            }
+
+            function changeFirstNumber(id,t){
+                var num = t.value;
+                if(num > -1 && num != oldNum){
+                    $.getJSON("{:U('change_job_order')}",{id:id,order:num},function(json){
+                        if(json.status == 1){
+                            t.value = num;
+                            document.location.reload(true);
+                        }else{
+                            alert("操作失败，请联系管理员！");
+                        }
+                    });
+                }else{
+                    if(num < 0){
+                        t.value = oldNum;
+                        alert("请输入大于0的数字!");
+                    }
+                }
+            }
+    </script>
+</block>

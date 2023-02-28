@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__master/css/daren_index.css"/>
+    <script type="text/javascript" src="__JS__js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__JS__js/md5.js"></script>
+    <script type="text/javascript" src="__JS__js/trimspance.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="flower_bg2">
+            <img class="logo_pic" src="__STATIC__/master/img/logo.png"/>
+            <img class="sign_pic" src="__STATIC__/master/img/signUp_title.png"/>
+            <div class="section_main2">
+                <div class="signUp_title">- 注 册 -</div>
+                <div class="signUp_txt">
+                    <ul>
+                        <li>
+                            <input class="sign_put" type="number" id="phone_number" name="phone_number" placeholder="手机号">
+                            <p class="put_tip">(非常重要，审核结果会通过注册手机号以短信形式通知)</p>
+                        </li>
+                        <li>
+                            <input class="sign_put" type="number" id="code_word" name="code_word" placeholder="验证码">
+                            <input class="sign_put" id="code_get" name="code_get" value="获取验证码" readonly>
+                        </li>
+                        <li>
+                            <input class="sign_put" type="password" id="code" name="code" placeholder="密码">
+                            <p class="put_tip">(收到BeaBox后可通过账号密码直接登录完成任务)</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="commit_for"><p>确定</p></div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+	var wait=60;
+	var url = "{WEB_URL}master/";
+	function time(c) {
+		if (wait == 0) {
+			c.removeAttribute("disabled");
+			c.value="获取验证码";
+			wait = 60;
+		} else {
+			c.setAttribute("disabled", true);
+			c.value="重新发送(" +wait+ ")";
+			wait--;
+			setTimeout(function() {time(c)},1000);
+		}
+	}
+	//获取验证码
+	$("#code_get").click(function (){
+		var mobile = $("#phone_number").val();
+		var checkMobile = /^1[34578]\d{9}$/;
+		if(!checkMobile.test(mobile)){
+			alert('请输入正确的手机号码');
+			return false;
+		}else{
+			time(this);
+			$.ajax({
+				type : 'post',
+				data : 'mobile='+mobile+'&box_id='+{:I('box_id')},
+				url  : url+'getcode',
+				success:function(msg){
+					if(msg.code == 200){
+						
+					}else if(msg.code == 302){
+						alert('该手机号码已经注册过了！');
+						window.location.href = url+'application?box_id='+{:I('box_id')}+'&mobile='+mobile;
+						return false;
+					}else{
+						alert('短信发送失败，请稍后再试！');
+						return false;
+					}
+				}
+			});
+		}
+	});
+	$(".commit_for").click(function (){
+		var mobile = $("#phone_number").val();
+		var code   = $("#code_word").val();
+		var password= $("#code").val();
+		var randnum = Math.random();
+		randnum = Math.floor(randnum * 10000);
+		
+		var checkMobile = /^1[34578]\d{9}$/;
+		if(!checkMobile.test(mobile)){
+			alert('请输入正确的手机号码');
+			return false;
+		}
+		/*if(trimspance(password) == ''){
+			alert('密码不能为空');
+			return false;
+		}*/
+		if (password.indexOf(" ") == -1) {
+		}else{
+			alert("密码中不能使用空格！");
+			return false;
+		}
+		if(password.length < 6){
+			alert('密码不能小于6位!');
+			return false;
+		}
+		var pasw = password+'box'+randnum;
+		pasw = hex_md5(pasw);
+		var data = 'mobile='+mobile+'&code='+code+'&password='+pasw+'&randnum='+randnum+'&str='+password+'&box_id='+{:I('box_id')};
+		$.ajax({
+			type : 'post',
+			data : data,
+			url  : url+'regeditmobile',
+			success:function(msg){
+				if(msg.code == 200){
+					url = url +'application?box_id='+{:$_GET['box_id']};
+					//console.info(url);return false;
+					window.location.href = url;
+					return false;
+				}else if(msg.code == 400){
+					alert('注册失败，请稍后再试！');
+					return false;
+				}else if(msg.code == 301 ){
+					alert('验证码错误！');
+					return false;
+				}else{
+					alert('网络传输错误！');
+					return false;
+				}
+			}
+		});
+	});
+</script>
+<script>
+wx.config({
+	appId: "{$ticket[appid]}", // 必填，公众号的唯一标识
+	timestamp: "{$ticket[timestamp]}", // 必填，生成签名的时间戳
+	nonceStr: "{$ticket[noncestr]}", // 必填，生成签名的随机串
+	signature: "{$ticket[signature]}",// 必填，签名，见附录1
+	jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','chooseImage','uploadImage']
+});
+wx.onMenuShareTimeline({
+	title: '{$desc}', // 分享标题
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareAppMessage({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	type: '', // 分享类型,music、video或link，不填默认为link
+	dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareQQ({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+	   // 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareWeibo({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+</script>
+<script type="text/javascript" src="__JS__js/youmengtongji.js"></script>
+<script type="text/javascript" src="__JS__js/delectwenzi.js"></script>
+</body>
+</html>

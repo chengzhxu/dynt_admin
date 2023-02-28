@@ -1,0 +1,128 @@
+<extend name="Public/base"/>
+<block name="body">
+    <script type="text/javascript" charset="utf-8" src="/Public/Admin/Static/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="/Public/Admin/Static/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+    <div class="main-title">
+        <h2>话题详情</h2>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+    <br/>
+    <div>
+            <table class="table table-bordered table-striped ">
+                <tbody>
+                    <tr>
+                        <th style='width:150px;'>
+                            ID
+                        </th>
+                        <td >
+                            {$topic.id}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style='width:150px;'>
+                            发布人UID
+                        </th>
+                        <td >
+                            {$topic.uid}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style='width:150px;'>
+                            发布人手机号
+                        </th>
+                        <td >
+                            <a href="{:U('User/user_info?uid='.$topic['uid'])}" >{$topic.mobile}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            发布人昵称
+                        </th>
+                        <td>
+                            <a href="{:U('User/user_info?uid='.$topic['uid'])}" >{$topic.nickname}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            内容
+                        </th>
+                        <td>
+                            {$topic.content}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            图片
+                        </th>
+                        <td>
+                            <foreach name="thumbs" item="v" key="k">
+                                <img src="{$v.location}" style="width: {$v.width}px; height: {$v.height}px;">
+                            </foreach>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            发布时间
+                        </th>
+                        <td>
+                            {$topic.dateline|time_format}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+    </div>
+    
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        $('.form-datetime').datetimepicker({
+                language: "zh-CN",
+                autoclose: true,
+                format: 'yyyy-mm-dd hh:ii'
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+            $('.form-date').datetimepicker({
+                language: "zh-CN",
+                minView: 2,
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('.form-time').datetimepicker({
+                language: "zh-CN",
+                minView: 0,
+                startView:1,
+                autoclose: true,
+                format: 'hh:ii'
+            });
+            $('.time').change(function () {
+                var fieldName = $(this).attr('data-field-name');
+                var dateString = $(this).val();
+                var date = new Date(dateString);
+                var timestamp = date.getTime();
+                $('[name=' + fieldName + ']').val(Math.floor(timestamp / 1000));
+            });
+        
+    </script>
+</block>

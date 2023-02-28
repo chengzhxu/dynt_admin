@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务列表</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__/master/css/daren_index.css"/>
+    <link rel="stylesheet" href="__STATIC__/master/css/join_mission.css"/>
+    <script type="text/javascript" src="__JS__/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="fbg">
+            <img class="title_pic78" src="__STATIC__/master/img/top78.png"/>
+            <img class="fbg_top" src="__STATIC__/master/img/fbg_top.png"/>
+            <img class="fbg_bottom" src="__STATIC__/master/img/fbg_bottom.png"/>
+            <div class="personal_info"><img src="{$userinfo['photo']}"/><span>{$userinfo['nickname']}</span></div>
+            <div class="box_content78">
+                <div class="missions_list">
+                    <ul>
+						<volist name="goodinfo" id="vo">
+							<li class="wait">
+								<p class="mission_pic"><img src="{$vo.thumbs}"/></p>
+								<p class="mission_name"><a onclick="jumpurl({$vo.gid})">{$vo.name}</a></p>
+								<if condition="$vo['completion'] lt 100">
+									<a class="to_finish" onclick="jumpurl({$vo.gid})"><img src="__STATIC__/master/img/lock_icon.png"/></a>
+								</if>
+							</li>
+						</volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+function jumpurl(good_id){
+	var url = "{WEB_URL}Task/mission_detail?good_id="+good_id+'&uid='+{:I('uid')}+"&box_id="+{:I('box_id')};
+	window.location.href = url;
+}
+</script>
+</body>
+</html>

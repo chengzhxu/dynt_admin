@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小调查</title>
+    <meta name="viewport" content="width=750,user-scalable=no">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta name="mobileOptimized" content="width">
+    <meta name="handheldFriendly" content="true">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__STATIC__master/css/daren_index.css"/>
+    <script type="text/javascript" src="__JS__js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+    <div class="line_bg">
+        <div class="flower_bg">
+            <img class="logo_pic" src="__STATIC__/master/img/logo.png"/>
+            <div class="section_main">
+                <div class="survey_title"><img src="__STATIC__/master/img/survey_title.png"/></div>
+                <div class="survey_txt">
+                    <div class="survey_ques">1.你是否对以下产品感兴趣 ?</div>
+                    <div class="ques_options">
+                        <span>不感兴趣</span>
+                        <span>一般</span>
+                        <span>非常感兴趣</span>
+                    </div>
+					<div class="list" style="width:100%;">
+						<div class="survey_question1">
+							<ul>
+								<li class="tou"> • 口红</li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+							</ul>
+						</div>
+						<div class="survey_question1">
+							<ul>
+								<li class="tou"> • 洗面奶</li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+							</ul>
+						</div>
+						<div class="survey_question1">
+							<ul>
+								<li class="tou"> • 漱口水</li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+							</ul>
+						</div>
+						<div class="survey_question1">
+							<ul>
+								<li class="tou"> • 爽肤水</li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+								<li class="option_icon"> • </li>
+							</ul>
+						</div>
+					</div>
+                    <div class="survey_ques">2.如果拿到了盒子需要你完成相应的任务（在微信微博）是否愿意呢 ?</div>
+                    <div class="ques2_desc">
+                        <p>•	体验产品;</p>
+                        <p>•	与你的朋友面对面交流体验感受，通过社交媒体在线分享;</p>
+                        <p>•	参与收官小问卷，评估活动期间体验的产品;</p>
+                        <p>•	在诸如微博/微信、秒拍、美拍，优酷、土豆等各类社交媒体上发布产品体验图文/视频，并强调所收到的产品全部来自“BeaBox宝贝盒子”;
+                        所有产品仅限体验者本人使用（若特殊原因无法亲自体验，可通过朋友/家人代为体验，协助完成任务；若产品被转卖或不提交任务则会被取消以后参与的机会）;
+                        </p>
+                    </div>
+                    <div class="ques2_options">
+                        <ul>
+                            <li><span class="option2_icon chose" value="1"> • </span><span>愿意</span></li>
+                            <li><span class="option2_icon" value="0"> • </span><span>不愿意</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="commit_for"><p>提交</p></div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(".survey_question1 ul .option_icon").each(function(){
+        $(this).click(function(){
+            $(this).siblings(".option_icon").attr("class","option_icon");
+            $(this).addClass("chose");
+        })
+    });
+    $(".ques2_options li").click(function(){
+        var _other=$(this).siblings().find(".option2_icon");
+        _other.attr("class","option2_icon");
+        $(this).find(".option2_icon").addClass("chose");
+    });
+	var data = {$boxinfo};
+	var html = is_agree = '';
+	var num  = 0;
+	for(var i = 0 ; i < data.option.length ; i++){
+		html = html + '<div class="survey_question1"><ul><li class="tou"> • '+data.option[i]['options']['option']+'</li><li class="option_icon chose" val="1" option_id="'+data.option[i]['options']['id']+'"> • </li><li class="option_icon" val="2" option_id="'+data.option[i]['options']['id']+'"> • </li><li class="option_icon"  val="3" option_id="'+data.option[i]['options']['id']+'"> • </li></ul></div>';
+		num = i;
+	}
+	$(".list").empty().append(html);
+	$(".option_icon").click(function (){
+		$(this).parent().find('li').removeClass('chose');
+		$(this).addClass('chose');
+	});
+	$(".commit_for").click(function (){
+		var i = 0;
+		var options = [];
+		$(".option_icon").each(function (){
+			if($(this).attr('class') == 'option_icon chose'){
+				options[i] = '{\"value\":'+$(this).attr('val')+',\"option_id\":'+$(this).attr('option_id')+'}';
+				i++;
+			}
+		});
+		var optin_str = options.join(",");
+		optin_str = "["+optin_str+"]";
+		if( i < num ){
+			alert('请完善所有问题!');
+			return false;
+		}
+		is_agree = $(".ques2_options").find(".chose").attr('value');
+		if(is_agree == ''){
+			alert('请勾选个人意愿!');
+			return false;
+		}
+		var PostData = '{\"box_id\":'+data.boxid+',\"is_agree\":'+is_agree+',\"options\":'+optin_str+'}';
+		var url  = "{WEB_URL}master/saveanswer";
+		$.ajax({
+			type : 'post',
+			data : 'info='+PostData,
+			url  : url,
+			success:function(msg){
+				if(msg.code == 200){
+					window.location.href = "{WEB_URL}master/getmobile?box_id="+data.boxid;
+					return false;
+				}else{
+					alert('网络传输错误!');
+					return false;
+				}
+			}
+		});
+	});
+</script>
+<script>
+wx.config({
+	appId: "{$ticket[appid]}", // 必填，公众号的唯一标识
+	timestamp: "{$ticket[timestamp]}", // 必填，生成签名的时间戳
+	nonceStr: "{$ticket[noncestr]}", // 必填，生成签名的随机串
+	signature: "{$ticket[signature]}",// 必填，签名，见附录1
+	jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','chooseImage','uploadImage']
+});
+wx.onMenuShareTimeline({
+	title: '{$desc}', // 分享标题
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareAppMessage({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	type: '', // 分享类型,music、video或link，不填默认为link
+	dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	success: function () { 
+		// 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareQQ({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+	   // 用户取消分享后执行的回调函数
+	}
+});
+
+wx.onMenuShareWeibo({
+	title: '{$title}', // 分享标题
+	desc: '{$desc}', // 分享描述
+	link: '{$shareurl}', // 分享链接
+	imgUrl: '{$shareimg}', // 分享图标
+	success: function () { 
+	   // 用户确认分享后执行的回调函数
+	},
+	cancel: function () { 
+		// 用户取消分享后执行的回调函数
+	}
+});
+</script>
+<script type="text/javascript" src="__JS__js/youmengtongji.js"></script>
+<script type="text/javascript" src="__JS__js/delectwenzi.js"></script>
+</body>
+</html>
